@@ -7,82 +7,94 @@
 
 ## Our Design
 
-An order looks like an object with mostly empty fields save for the register (and possibly employee), the state of the order, and empty fields for the item, addons, etc.
-
-The state of the order when the customer is building it: Drafting
-The fields: 
-  - RegisterID - ID from the register being used
-  - OrderID - Generated ID
-
-must exist 
-
-The order requires a payment verification function to move forward.
-The RegisterID and OrderID must stay the same 
-
-but the fields for State will move to Pending, and the 
-included item, addons, total price, customer name, and time placed will be filled. 
-
-The state where its been submitted: Pending
-
-The fields: 
-  - RegisterID 
-  - OrderID 
-  - ItemID - ID that points to an Items information 
-  - Customizations[] an array of itemIDs for addons 
-  - CustomerName a string
-  - TimePlaced a datetime object
-must exist 
-
-The order requires a isComplete() function to be used by the order view to be marked as complete and delivered to the customer. 
-
-The fields TimeCompleted, and state would change, STATE would change to Completed. 
-but the fields for RegisterID, OrderID, Item, Customizations, CustomerName, TimePlaced will stay the same.
-
-The state where its been picked up: Complete
- At this point the order will be done and can be safely moved to 
- history. The final order would contain the following information 
-
-RegisterID, OrderID, Item, Customizations, CustomerName, TimePlaced, State, TotalPrice
 
 
-**Item**
-What it knows: 
-The Item knows details about a given inventory item, what can be customized, and the price of the item. 
+graph LR
+    Customer((Customer))
+    Barista((Barista))
+    Manager((Manager))
 
-What it does: 
-The Item transfers information about the items price, customization, and details to its given entity. 
+    subgraph System["Brew & Byte System"]
 
+        C1[View menu and prices]
+        C2[Build an order]
+        C3[Order multiple quantities]
+        C4[Modify order before placing]
+        C5[Place order and receive confirmation number]
+        C6[Add note to order]
+        C7[Correct placed order]
+        C8[Receive loyalty discount]
+        C9[Pick up completed order]
+
+        B1[View Queue]
+        B2[Sort Queue]
+        B3[Mark orders as complete]
+        B4[View order details]
+        B5[Change stock status]
+        B6[Add menu items]
+
+        M1[Modify Menu]
+        M2[Restock Ingredients]
+
+    end
+
+    Customer --> C1
+    Customer --> C2
+    Customer --> C3
+    Customer --> C4
+    Customer --> C5
+    Customer --> C6
+    Customer --> C7
+    Customer --> C8
+    Customer --> C9
+
+    Barista --> B1
+    Barista --> B2
+    Barista --> B3
+    Barista --> B4
+    Barista --> B5
+    Barista --> B6
+
+    Manager --> M1
+    Manager --> M2
+
+---
+
+
+## Our Deliverable
+
+
+|Use case|Actor|Requirement|Where it came from|
+|---|---|---|---|
+|View Queue|Barista|3.1|This req. requires the barista to see placed orders|
+|Sort Queue|Barista|3.2|This req. requires the barista to have an ordered queue|
+|Mark orders as complete|Barista|3.3|This req. requires the barista to mark orders as complete|
+|View order details|Barista|3.5|This req. requires the barista to have the ability to see greater order details|
+|Change stock status|Barista|3.6|This req. requires the barista to alert for out of stock items|
+|Add menu items|Barista|3.7|This req. requires the barista to have the ability to add menu items|
+|Modify menu|Manager|4.1|only the manager is allowed to modify the menu|
+|Restock ingredients|Manager|4.3|manager can restock ingredients|
+|View menu and prices|Customer|2.1|It says a customer can look at the menu and see what available and how much it cost|
+|Build an order|Customer|2.2|It says the customer can build an order by adding items and selecting options like size and milk|
+|Order multiple quantities|Customer|2.3|It says a customer can order more than one of the same drink|
+|Modify orders before placing|Customer|2.4|It says the customer can remove an item or change it before finishing their order|
+|Place orders and receiving confirmation number|Customer|2.5|It says that when a customer is done they can place the order then receive a confirmation number|
+|Add notes to order|Customer|2.6|It says the customer can add notes to the order to specify certain details|
+|Correct Placed orders|Customer|2.7|It says the customer should be able to fix their orders after its been sent|
+|Receive Loyalty discount|Customer|2.8|It says loyalty members should have discounts automatically applied|
+|Pick up completed order|Customer|3.3|It could be inferred that this is a use case since in 3.3 it states an order is ready to be picked up.|
 
 
 ---
 
+## Unused Functional Requirements
 
-## How We Got Here
+Barista did not use: 
+3.4
 
-We were required to break down the order entity and delve deeper into how the state updated throughout the system as an order is finished. We decided to delve deeper in the state ide and specify the triggers as such: 
+Manager did not use: 
+4.4, 4.5, 4.6
 
-Drafted Triggers : customer triggers the drafted state when they start a order
-Failed Triggers: When any error occurs, such as payment failure, errors during pending or complete (employee unable to complete order)
-Pending Triggers: Payment is verified 
-Complete Triggers: When employee marks the order as completed through order panel
+Customer did not use: 
+N/A
 
-We got here by discussing all the possible outcomes of an order at each stage, from the drafting of an order and possible failures of payment verification or some other issue, to the possible issue of an incomplete order by the employee for whatever reason for our fail states, and then finally a complete state for successful orders. 
-
----
-
-## Where We Disagreed
-
-
-An example in which we as a group disagreed was the inclusion of a customerID, we discussed that the inclusion of a customerID could be useful in the case of 2 orders with the same name, but we decided that since we already have an orderID, we could differentiate between them with our orderID without additional complexity. We also initially proposed that the orderID would be randomly generated however we ended up agreeing that we should have an incremented orderID so that we can have an orderly timeline of orders. We came to this conclusion by positing the idea of recycling orderIDs that may have been canceled, while we disagreed with the idea of recycling orderIDs, we kept the idea of incrementing ids from this idea.
-
----
-
-## What We're Not Sure About
-
-- Whats the best method to have the Inventory panel communicate with the kiosk? Should each kiosk entity subscribe to some topic the Inventory panel provides? or should it refresh for updates since its not a menu that would likely update during service, unless we include stock updates for out of stock items
-
-- How should we sync order panels? should we also have order panels subscribe to a topic and then have each order panel update a single source of truth that all order panels have access to when a user modifies the order list? 
-
-
-- For order, should we include a totalPrice attribute? or should we leave that as a calculated value? how do taxes affect our decision making here? 
-- Should order just have empty or default values as it moves through the different processes of state? 

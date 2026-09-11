@@ -8,7 +8,7 @@
 ## Our Design
 
 
-
+```mermaid
 graph LR
     Customer((Customer))
     Barista((Barista))
@@ -57,7 +57,7 @@ graph LR
 
     Manager --> M1
     Manager --> M2
-
+```
 ---
 
 

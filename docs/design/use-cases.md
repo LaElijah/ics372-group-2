@@ -105,60 +105,47 @@ graph LR
 
 ## 3 · Detailed Use Cases
 
-*Repeat this block for each use case that needs full detail.*
+### UC-C2 Build and Customize Order
 
-*The flow is written as a conversation between the actor and the system: the actor does something, the system responds, the actor does the next thing. Steps are numbered continuously down the table, alternating between the columns. Only one column has content in any given row.*
+**Actor:** Customer
 
-*Write the system's side as what the system does, not how it does it. "The system shows the items currently available" is a system response. "The system queries the menu table and populates the list view" is implementation.*
+**Precondition:** System must be ready to accept orders
 
-*The alternative flows are where the design lives. The main flow is the easy part and is where nothing interesting ever happens — if you cannot think of a single thing that could go wrong, you have not thought about it yet. To find them, walk the main flow and ask at every step what that step assumes, then ask what happens when the assumption is false.*
-
-*An alternative flow branches from a step in the flow. Something that happens out in the world — a carton turns out to be empty, a machine breaks — is not an alternative flow. It reaches the system as an actor doing something, which makes it a use case of its own, or it does not reach the system at all.*
-
----
-
-### [UC-ID] [Use Case Name]
-
-**Actor:** [primary actor] *[and any secondary actors]*
-
-**Precondition:** [what must be true before this can begin]
-
-**Postcondition:** [what is true afterward that was not true before]
+**Postcondition:** Order must go to employee to make it
 
 **Main flow**
 
 | Actor Action | System Response |
 |---|---|
-| 1. [The actor does something.] | |
-| | 2. [The system responds.] |
-| 3. [The actor does the next thing.] | |
-| | 4. [The system responds.] |
-| | 5. [And so on, until the postcondition holds.] |
+| 1. Customer starts order| |
+| | 2. Creates a updatable temporary order and tracks stock |
+| 3. Customer updates the order | |
+| | 4. continues to keep track |
+| 5. customer pays for order | |
+| | 6. order sent to queue for employees |
 
 **Alternative flows**
 
-*Each one is keyed to the step in the main flow where it branches. Say where it rejoins, or that it ends the use case.*
-
-**[A1] At step 3 — [what is different this time]**
+**A1 At step 3 — item in menu becomes unavailable **
 
 | Actor Action | System Response |
 |---|---|
-| 3a. [What the actor does instead.] | |
-| | 3b. [How the system responds.] |
+| 3a. Must select a different item | |
+| | 3b. update order and not use out-of-stock item |
 
-*Rejoins the main flow at step 4.* [or: *Ends here; the postcondition does not hold.*]
+Rejoins step 3
 
-**[A2] At step [N] — [what goes wrong]**
+**A2 At step 5 — payment failure**
 
 | Actor Action | System Response |
 |---|---|
-| | [N]a. [What the system does about it.] |
+| | 5a. does not send the order to the queue. Ask again for payment |
 
-*[Where it goes.]*
+Can be the end of the process or be sent depending on payment acceptance
 
-**Assumptions:** [Anything you decided that the requirements did not decide. Cross-reference the entry in `open-questions.md`.]
+**Assumptions:** N/A
 
----
+
 
 ## 4 · Non-Functional Requirements
 

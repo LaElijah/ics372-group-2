@@ -145,7 +145,84 @@ Can be the end of the process or be sent depending on payment acceptance
 
 **Assumptions:** N/A
 
+---
+### UC-C3 Place Order and Receive Confirmation Number
 
+**Actor:** Customer
+
+**Precondition:** The customer is viewing the menu and is ready to place an order. The order queue is ready to receive orders.
+
+**Postcondition:** The order is submitted to the barista queue and the customer receives a confirmation number
+
+**Main flow**
+
+| Actor Action | System Response |
+|---|---|
+| 1. Customer starts order| |
+| | 2. The system shows available items, prices, and availability |
+| 3. Customer selects an item from the menu | |
+| | 4. The System shows the item's available options and price |
+| 5. Customer selects the quantity and desired options | |
+| | 6. The system adds the item to the order and shows the updated order |
+| 7. Customer reviews the order and makes any necessary changes | |
+| | 8. The system shows the updated order and total price |
+| 9. Customer places the order | |
+| | 10. The system submits the order to the barista queue and provides a confirmation number to the customer |
+
+**Alternative flows**
+
+**A1 At step 5 — Selected item becomes unavailable **
+
+| Actor Action | System Response |
+|---|---|
+| 5a. Customer selects an item that is no longer available | |
+| | 5b. The system informs the customer that the item is unavailable |
+| 5c. Customer selects another available item | |
+
+Rejoins step 3
+
+**A2 At step 9 — Customer decides to change the order **
+
+| Actor Action | System Response |
+|---|---|
+| 9a. Customer decides that the order needs to be changed before placing it | |
+| | 9b. The system keeps the order available to changes |
+
+Rejoins step 7
+
+Assumptions: Payment process is undecided and is not included
+
+---
+### UC-B3 Mark Orders as Complete
+
+**Actor:** Barista
+
+**Precondition:** The barista has at least one order in the queue that needs to be prepared
+
+**Postcondition:** The order is marked complete and ready for pickup
+
+**Main flow**
+
+| Actor Action | System Response |
+|---|---|
+| 1. Barista selects an order from the queue| |
+| 2. Barista views the order details | |
+| 3. Barista prepares the order | |
+| 4. Barista marks the order as complete | |
+| | 5. The system registers the order as complete |
+| | 6. The system marks the order as ready for pickup |
+
+**Alternative flows**
+
+**A1 At step 1 — No orders are currently available **
+
+| Actor Action | System Response |
+|---|---|
+| 1a. Barista checks the order queue | |
+| | 1b. The system shows that there are no orders currently needing completion |
+| 1c. Barista waits for an order to become available | |
+
+Assumptions: Orders cannot be changed once it has been placed (requirement 3.4)
 
 ## 4 · Non-Functional Requirements
 

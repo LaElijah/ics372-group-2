@@ -15,8 +15,9 @@ classDiagram
     }
 
     class Order {
+        confirmation number
         status
-        date
+        date and time
         total
         note
     }
@@ -26,6 +27,7 @@ classDiagram
         milk
         size
         syrup
+        associated price
     }
 
     class MenuItem{
@@ -37,7 +39,7 @@ classDiagram
     class Ingredients{
         name
         quantity
-        inventory threshold
+        low inventory threshold
     }
     
     class Employee{
@@ -45,10 +47,10 @@ classDiagram
         position
     }
 
-    Customer "1" --> "0..*" Order : request
-    Order "1" --> "1..*" OrderItem : holds
-    OrderItem "0.." --> "1*" MenuItem : references
-    MenuItem "0.." --> "0..*" Ingredients : requires
+    Customer "1" --> "0..*" Order : places
+    Order "1" --> "1..*" OrderItem : contains
+    OrderItem "0.." --> "1*" MenuItem : represents
+    MenuItem "0.." --> "0..*" Ingredients : uses
     Employee "1" --> "0..*" Order : prepares
 ```
 

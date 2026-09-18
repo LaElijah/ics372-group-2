@@ -6,7 +6,7 @@
 ---
 
 ## 1. Tonight's Prompt
-
+Design a main flow and use that to create a Customer Places Order sequence diagram. Identify any hidden or created problems with the sequence diagram.
 
 ### Part A
 
@@ -71,7 +71,7 @@ OrderItem: A specific menu item that was added to an order including the associa
 
 ## 2. How We Got Here
 
-
+We used what we deemed the most accurate sequence diagram within our group and used that as the basis for the following questions. An extra entity was not needed since only information was needed and that alone wouldn't warrant a new entity. We did identify a missing machinery and that was how would the system calculate the total and since it wasn't identified as a business entity in our domain model we thought it fit. Looking over the sequence diagram we realized that if OrderItem used MenuItems there wouldn't be any clear way to tell what a customer paid for their order. A fix we came up with was using OrderItem to preserve or hold the price that came from that specific order. This would allow prices to change while being able to see the correct prices for older orders.
  
 
 ---

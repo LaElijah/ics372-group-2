@@ -8,7 +8,7 @@
 ## 1. Tonight's Prompt
 
 
-### 1
+### Part A
 One sequence diagram for Customer Places Order, from the use case's numbered steps. Every message your model cannot answer goes on a list, sorted into one of two: an entity you are missing, or machinery that has no counterpart in the business at all. The second kind goes to open-questions.md for Week 6. Nothing gets a class tonight.
 
 
@@ -39,33 +39,35 @@ sequenceDiagram
     Order-->>Customer: provideConfirmationNumber()
 ```
 
+Missing entity: None
+
+Missing machineary: Calculating the total for the order isn't represented as a business entity
+
+### Part B (Price Change and Repair)
+
+As of right now the model will not reliably tell what Sam paid if the menu price changes. The price is stored on MenuItem and OrderItem points to MenuItem. If the price of MenuItem is changed, the model won't be able to preserve Sam's original order price.
+
+The fix would be to store the price at the time it was ordered inside OrderItem. MenuItem would display the offers on the menu while OrderItem would be the item plus the price that applied when it was added.
+
+The relationship would be that an order could hold multiple OrderItems and OrderItems can represent the same MenuItem. So the MenuItem would hold the current menu price and OrderItem would hold the price at the time of the order.
 
 
+### Part B (Two Jobs)
+
+MenuItem: What the coffee shop is currently offering with its price and availablity.
+
+OrderItem: A specific menu item that was added to an order including the associated price.
 
 
+### Part B (Sweep)
 
-
-### 2
-Part B (15 min) — the price change, and the repair.
-
-
-
-Agree on what your model says Sam paid, and why. Then fix it, and be precise about what the fix is: what entities exist now that did not, what each knows, what the relationship between them is, and which one holds the price.
-
-
-
-
-### 3
-
-State the two jobs explicitly, one sentence each: what is the thing on the menu, and what is the thing in the order? They are different things with different lifetimes. The menu's version changes whenever the owner says so. The order's version must never change again once the order is placed.
-
- 
-
-
-### 4
-
-Then sweep the rest of your model for the same shape. At every entity ask: is there a moment where the general thing changes and the particular thing must not?
-
+| Entity | Is there a moment where the general thing changes and the particular thing must not? | Reason | |
+|---|---|---|---|
+| MenuItem | Yes | Price can change but an existing OrderItem needs the original price |
+| Ingredient | Unsure | Stock will change but we're not sure if theres a requirement needing orders to preserve anything from ingredients |
+| Customer | Unsure | Loyalty discount could change after an order but needing to preserve order discount is undecided |
+| Order | Yes | The order changes while being built but is fixed after submitted if we use requirement 3.4 |
+| OrderItem | Yes | Price should be preserved when a order is placed |
 
 
 ## 2. How We Got Here
@@ -84,5 +86,5 @@ Then sweep the rest of your model for the same shape. At every entity ask: is th
 ---
 
 ## 4. What We're Not Sure About
-Most of us had some trouble making our diagrams or fully understanding what was asked of us. We struggled to come to meaningful conclusions from the questions and our own sequence diagrams. 
+Most of us had some trouble making our diagrams or fully understanding what was asked of us.
 

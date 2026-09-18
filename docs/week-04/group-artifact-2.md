@@ -9,7 +9,6 @@
 
 
 ### Part A
-One sequence diagram for Customer Places Order, from the use case's numbered steps. Every message your model cannot answer goes on a list, sorted into one of two: an entity you are missing, or machinery that has no counterpart in the business at all. The second kind goes to open-questions.md for Week 6. Nothing gets a class tonight.
 
 
 ```mermaid

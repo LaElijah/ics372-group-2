@@ -78,7 +78,7 @@ We used what we deemed the most accurate sequence diagram within our group and u
 
 ## 3. Where We Disagreed
 
-
+There wasn't anything we really disagreed about. We were mainly combining all of our ideas together to form conclusions and get a grasp on the situation.
 
 
 

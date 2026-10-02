@@ -1,7 +1,7 @@
-# Class Model — [Group Name / Number]
-### [Course Name] | [Semester]
-**Members:** [All member names]
-**Last updated:** [Date] — [what changed]
+# Class Model — Group 2
+### ICS372 | Fall 2026
+**Members:** Thomas Yang, Abenezer Aregay, Elijah Allotey, Houreratou Bande
+**Last updated:** 10/2/2026 — Diagram
 
 ---
 
@@ -23,10 +23,69 @@
 
 ```mermaid
 classDiagram
-    class ClassName {
-        -fieldName: Type
-        +methodName(param: Type) ReturnType
-    }
+	class Ingredients {
+	    +name: String;
+	    +quantity: int; 
+	    -lowInvThreshold: int; 
+	    +addQuantity(quantity: int): void;
+        +useQuantity(quantity: int): void;
+        +isAvailable(): boolean
+
+	}
+	
+	class Employee {
+	    +name: String; 
+	    +position: String; 
+	    +viewOrder(order: Order): void; 
+	    +completeOrder(order: Order): void;
+	}
+	
+	class Customer {
+            +loyaltyStatus: boolean
+			+name: String
+			+phoneNumber: String
+        }
+
+        class Order {
+			+customer: Customer
+			+items: List<OrderItem>
+            +confirmationNumber: String
+            +status: String
+            +dateAndTime: LocalDateTime
+            +total: BigDecimal
+            +note: String
+            +addItem(item: OrderItem): void
+            +removeItem(item: OrderItem) : void
+            +calculateTotal() : BigDecimal
+        }
+            
+        class OrderItem {
+            quantity: int
+            milk: String
+            size: String
+            syrup: String
+            associatedPrice: BigDecimal
+            +calculateSubTotal(): BigDecimal
+            +getCost(): BigDecimal
+        }
+
+        class MenuItem {
+            name: String; 
+            price: BigDecimal;
+            status: String; 
+            +updatePrice(newPrice: BigDecimal): boolean;
+            +updateName(newName: String): boolean; 
+            +setAvailable(available: boolean): void
+            +isAvailable(): boolean
+            +getChoices(): List <String>
+        } 
+
+
+    Customer "1" --> "0..*" Order : places
+    Order "1" *-- "1..*" OrderItem : contains
+    OrderItem "0.." --> "1" MenuItem : represents
+    MenuItem "0..*" --> "0..*" Ingredients : uses
+    Employee "1" --> "0..*" Order : prepares
 ```
 
 ---

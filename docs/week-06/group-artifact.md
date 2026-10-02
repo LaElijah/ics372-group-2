@@ -56,8 +56,8 @@ classDiagram
 	}
 	
 	class Employee {
-	    name: String; 
-	    position: String; 
+	    +name: String; 
+	    +position: String; 
 	    +viewOrder(order: Order): void; 
 	    +completeOrder(order: Order): void;
 	}
@@ -70,7 +70,7 @@ classDiagram
 
         class Order {
 			+customer: Customer
-			+item: OrderItem
+			+item[]: OrderItem
             +confirmation number: string
             +status: string
             +date and time: time

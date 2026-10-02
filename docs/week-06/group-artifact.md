@@ -64,6 +64,8 @@ classDiagram
 	
 	class Customer {
             +loyalty status: boolean
+			+name: string
+			+phoneNumber: string
         }
 
         class Order {

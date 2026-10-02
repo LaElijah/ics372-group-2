@@ -69,7 +69,9 @@ classDiagram
         }
 
         class Order {
-            + confirmation number: string
+			+customer: Customer
+			+item: OrderItem
+            +confirmation number: string
             +status: string
             +date and time: time
             +total: float

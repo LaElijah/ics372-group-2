@@ -156,6 +156,68 @@ We used no hierarchy and no interface because our domain model does not currentl
 
 [Your response here]
 
+
+### Group Redesign (30 min)
+
+**Three things, in this order:**
+
+1. **Re-cut the hierarchy** along the two axes from the regroup: *configurable vs. fixed*, and *assembled from ingredients vs. stocked as whole units*. If you keep a tree, one sentence on what it buys you. If you drop it, say what replaced it.
+2. **Run the four questions** against the new version. Each one needs a class and a method behind it.
+3. **Sweep your own diagram** and fix any other place you split things by what they *are* rather than by what *varies*.
+
+**Not tonight:** how the customer view gets hold of the Menu in the first place. Put it in `open-questions.md` for a later session and leave it alone.
+
+**The four questions** (still posted):
+
+**Q1.** What does it cost, as this customer has configured it? \
+**Q2.** What choices does it offer, and what are the options for each? \
+**Q3.** Can it be sold right now? \
+**Q4.** What does it consume when it is sold?
+
+**Same file, second commit.** Don't start a new file or delete the first version's work. Edit the step 1 table and the step 2 diagram in place, and put everything new under this heading at the very end of section 1:
+
+
+### After the regroup
+
+
+**1. Re-cut the hierarchy** in your step 2 diagram. If a class disappeared, its entity still needs a destination, so fix its row in the step 1 table too.
+
+**2. Answer the four questions** under `### After the regroup`, in exactly these columns:
+
+```
+| Question | Class and method that answers it | Type the caller holds |
+|---|---|---|
+| Q1 cost as configured | | |
+| Q2 choices offered | | |
+| Q3 can it be sold now | | |
+| Q4 what it consumes | | |
+```
+
+A filled row looks like `Member.currentHolds(): List<Hold>` in the middle column and `Member` on the right: the method that answers, and what the calling code's variable is declared as. If a row has no answer, write `NOT ANSWERED` and put the reason in section 4.
+
+**3. Sweep the rest of the diagram.** One line per place you split classes by what something *is* rather than by what *varies*:
+
+```
+- Found: <the classes, and what you split them by>. Fixed by: <what you did instead>
+- Found: <the classes, and what you split them by>. Kept because: <what the split buys you>
+```
+
+Write `- Found: nothing else` if you looked and found nothing. Looking and finding nothing is a result; not looking isn't.
+
+**4. Finish the model.** Read this aloud against the new diagram and check every item. This is the version Week 7 compiles.
+
+- [ ] Step 1: every entity has a row, and every row has one of the three verdicts.
+- [ ] Step 2: every class has at least one attribute written `name: type`, or a note saying it deliberately has none.
+- [ ] Step 2: every method is written `name(parameters): returnType`. No bare names, no bodies.
+- [ ] Step 2: every line uses `<|--`, `*--`, `o--` or `-->`.
+- [ ] Step 2: every line has multiplicity in quotes on **both** ends.
+- [ ] Step 3: every class has `Responsible for:` and `Traces to:` filled in.
+- [ ] Step 4: your hierarchy sentence is rewritten for the new diagram.
+
+**5. What changed.** Two or three sentences: what the diagram looked like before the regroup, what it looks like now, and why. If your first version already held up, say what you did and when you decided it.
+
+**6. `docs/design/open-questions.md`:** anything you chose not to settle, each with a target week.
+
 ---
 
 ## 4. What We're Not Sure About

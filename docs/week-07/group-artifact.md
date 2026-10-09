@@ -1,0 +1,103 @@
+# Group Artifact - Week [N] Round [N]
+**Group:** [Group Number]
+**Members present:** [Full names, as they appear on the roster]
+**Date:** [Date]
+
+*Delete every italic instruction and every bracketed placeholder before you commit. The artifact should read as a document, not as a form with answers inserted.*
+
+---
+
+## 1. Tonight's Prompt
+
+*Copy this round's group prompt into this section exactly as it was given to you, including every part and every numbered item. Then produce each deliverable directly underneath the part that asked for it.*
+
+*Every deliverable the prompt names gets produced. A deliverable you ran out of time on gets one line saying where you got to. Commit what you have rather than nothing.*
+
+*Where the prompt asks for a diagram or a table, it goes under the part that asked for it. Every diagram is a Mermaid code block inside this file. Never an image, never a screenshot, never a link.*
+
+[Paste the prompt here, then produce your work under each part.]
+
+# Week 7: Group Build
+### ICS372 | Object-Oriented Design and Implementation
+
+**30 minutes, then 20 more after the checkpoint.** Commit to `docs/week-07/group-artifact.md`.
+
+## Checklist
+
+Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the group redesign.
+
+- [ ] Step 1 has a row for each of the six jobs, in order **(3 pts)**
+- [ ] Every row has exactly one class under **Owner we chose** **(3 pts)**
+- [ ] Every row says what data the job needs and which class holds it **(3 pts)**
+- [ ] Step 2 lists every job with no honest owner, or says `- None.` **(1 pt)**
+- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [ ] Committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
+
+Don't change your class diagram yet. The table is your *before*.
+
+---
+
+Each of your sketches made the same kinds of decisions alone: which class answers whether an item can be sold, which class knows a price, which class uses up ingredients. Now you put those decisions side by side and choose **one owner for every job.** Copy the steps below into **section 1 of your group artifact** and put each deliverable under the step that asked for it.
+
+**Groups of three:** spend your first ten minutes drawing UC-4 together, following the rules in the individual sketch handout, and put that diagram under step 1.
+
+**Step 1: The responsibility table.** A table with exactly these seven columns and one row for each of the six jobs below. The example row is from the library and shows only the shape.
+
+| Job | UC-1 | UC-2 | UC-3 | UC-4 | Owner we chose | Data it needs, and the class that holds it |
+|---|---|---|---|---|---|---|
+| Find a book by its title | `Catalog.findByTitle()` | - | proposed: `Library.search()` | - | `Catalog` | the list of every book: `Catalog` |
+
+The six jobs, in this order:
+
+1. Say whether a menu item can be sold right now
+2. Say what an item costs as the customer configured it
+3. Say what an item uses up, its customizations included
+4. Use up the ingredients for a completed order
+5. Know which order is next
+6. Count how many of each menu item sold today
+
+
+| Say whether a menu item can be sold | Employee.createOrder(items: OrderItem[]) | - | - | MenuItem.markUnavailableIfUses(ingredient) | MenuItem | The list of the status of every ingredient & the list of every menu item: 'MenuItem' | 
+| Say what an item costs as the customer configured it | Employee.createOrder(items: OrderItem[]) | - | - | - | Employee | the list of associated prices per order item in the created order: 'Employee' |
+| Say what an item uses up, its customizations included | Employee.createOrder(items: OrderItem[]) | - | - | - | Order | The list of items that were used with customizations: 'Order' | 
+| Use up the ingredients for a completed order | Employee.createOrder(items: OrderItem[]) | Barista.usedOrderIngredients() | - | - | Ingredients | The ingredient quantity used: 'Ingredients' | 
+| Know which order is next | - | barista.queueMethods() | - | - | Barista | The list of pending orders in the queue 'Barista' | 
+| Count how many of each menu item sold today | - | - | Order.findCompletedToday() OrderItem.getQuantity() MenuItem.getName() | Employee | the list of quantities of each menu item that was used: 'Employee' |
+
+How to fill the cells:
+
+- **UC-1 through UC-4:** the method that did this job in that person's diagram, written `Class.method()`. If it was a `MISSING` proposal, write `proposed:` before it. If the job doesn't happen in that use case, write a dash.
+- **Owner we chose:** exactly one class.
+- **Data it needs:** what the job has to know, and which class in your model holds that today.
+
+**Step 2: Jobs with no honest owner.** A job has no honest owner when no class in your model holds the data it needs. One line each:
+
+- `Job: <the job>. It needs: <the data>. No class has it because: <why>.`
+
+None.
+
+---
+
+## 2. How We Got Here
+
+*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
+
+[Your response here]
+
+---
+
+## 3. Where We Disagreed
+
+*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
+
+[Your response here]
+
+---
+
+## 4. What We're Not Sure About
+
+*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
+
+[Your response here]
+
+

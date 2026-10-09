@@ -66,7 +66,54 @@ The six jobs, in this order:
 | Count how many of each menu item sold today | - | - | Order.findCompletedToday() OrderItem.getQuantity() MenuItem.getName() | Employee | the list of quantities of each menu item that was used: 'Employee' |
 
 How to fill the cells:
+# Week 7: Group Redesign
+### ICS372 | Object-Oriented Design and Implementation
 
+**30 minutes.** Same file, second commit: `docs/week-07/group-artifact.md`.
+
+## Checklist
+
+Check every box before you commit. **6 of tonight's 20 group points.**
+
+- [ ] Item 1 has a row for every owner you changed, or says `No owner changed.` with one sentence **(2 pts)**
+- [ ] Item 2's diagram has the method for every owner in your table, with a return type, and renders on GitHub **(3 pts)**
+- [ ] Item 3 is two or three sentences on what changed **(1 pt)**
+- [ ] Everything new is under `### After the regroup`, committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
+
+---
+
+Don't start a new file or delete your first version's work. Put everything new under this heading at the very end of section 1:
+
+### After the regroup
+
+**The five rules from the regroup:**
+
+1. **Actors live outside the system.** A class named after a person holds facts about that person. It doesn't do that person's job.
+2. **The class that holds the data a job needs does the job.**
+3. **One fact, one owner.** If two classes can answer the same question, sooner or later they'll disagree.
+4. **If a relationship has to remember something** (which choices, how many, at what price, when), **the relationship is a class,** and it does the jobs that need what it remembers.
+5. **One reason to change.** If a class would have to change for two unrelated reasons, it's two classes, or one of its methods belongs somewhere else.
+
+**1. Re-run your table against the rules.** For every owner you change, one row:
+
+| Job | Owner before | Owner now | Rule that moved it |
+|---|---|---|---|
+| Say whether a menu item can be sold | MenuItem | Ingredients | 2 | 
+| Say what an item costs as the customer configured it | Employee | OrderItem | 2 | 
+| Say what an item uses up, its customizations included | Order | OrderItem | 2 |
+| Use up the ingredients for a completed order | Ingredients | No owner changed | 2 & 4 | 
+| Know which order is next | Barista | Queue | 4 | 
+| Count how many of each menu item sold today | Employee | Sales | 4 |
+
+
+
+
+
+If no owner changed, write `No owner changed.` and one sentence saying which rule you checked hardest.
+
+**2. The updated class diagram.** Copy the diagram from `docs/design/class-model.md` and change it so every job's owner has the method for that job, with parameters and a return type. Add any class you need, remove any class that lost all its jobs, and connect every class that calls another with a line.
+
+**3. What changed.** Two or three sentences: which class lost the most jobs, which gained the most, and why.
 - **UC-1 through UC-4:** the method that did this job in that person's diagram, written `Class.method()`. If it was a `MISSING` proposal, write `proposed:` before it. If the job doesn't happen in that use case, write a dash.
 - **Owner we chose:** exactly one class.
 - **Data it needs:** what the job has to know, and which class in your model holds that today.

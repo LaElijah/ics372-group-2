@@ -56,7 +56,8 @@ The six jobs, in this order:
 5. Know which order is next
 6. Count how many of each menu item sold today
 
-
+| Job | UC-1 | UC-2 | UC-3 | UC-4 | Owner we chose | Data it needs, and the class that holds it |
+|---|---|---|---|---|---|---|
 | Say whether a menu item can be sold | Employee.createOrder(items: OrderItem[]) | - | - | MenuItem.markUnavailableIfUses(ingredient) | MenuItem | The list of the status of every ingredient & the list of every menu item: 'MenuItem' | 
 | Say what an item costs as the customer configured it | Employee.createOrder(items: OrderItem[]) | - | - | - | Employee | the list of associated prices per order item in the created order: 'Employee' |
 | Say what an item uses up, its customizations included | Employee.createOrder(items: OrderItem[]) | - | - | - | Order | The list of items that were used with customizations: 'Order' | 

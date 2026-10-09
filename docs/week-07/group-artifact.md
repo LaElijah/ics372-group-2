@@ -1,23 +1,13 @@
-# Group Artifact - Week [N] Round [N]
-**Group:** [Group Number]
-**Members present:** [Full names, as they appear on the roster]
-**Date:** [Date]
-
-*Delete every italic instruction and every bracketed placeholder before you commit. The artifact should read as a document, not as a form with answers inserted.*
+# Group Artifact - Week 7 Round 1
+**Group:** 2
+**Members present:** Elijah Allotey, Thomas Yang, Abenezer Aregay, Houreratou Bande
+**Date:** 10/8/2026
 
 ---
 
-## 1. Tonight's Prompt
+# 1. Tonight's Prompt
 
-*Copy this round's group prompt into this section exactly as it was given to you, including every part and every numbered item. Then produce each deliverable directly underneath the part that asked for it.*
-
-*Every deliverable the prompt names gets produced. A deliverable you ran out of time on gets one line saying where you got to. Commit what you have rather than nothing.*
-
-*Where the prompt asks for a diagram or a table, it goes under the part that asked for it. Every diagram is a Mermaid code block inside this file. Never an image, never a screenshot, never a link.*
-
-[Paste the prompt here, then produce your work under each part.]
-
-# Week 7: Group Build
+## Week 7: Group Build
 ### ICS372 | Object-Oriented Design and Implementation
 
 **30 minutes, then 20 more after the checkpoint.** Commit to `docs/week-07/group-artifact.md`.
@@ -26,12 +16,12 @@
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the group redesign.
 
-- [ ] Step 1 has a row for each of the six jobs, in order **(3 pts)**
-- [ ] Every row has exactly one class under **Owner we chose** **(3 pts)**
-- [ ] Every row says what data the job needs and which class holds it **(3 pts)**
-- [ ] Step 2 lists every job with no honest owner, or says `- None.` **(1 pt)**
-- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
-- [ ] Committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
+- [X] Step 1 has a row for each of the six jobs, in order **(3 pts)**
+- [X] Every row has exactly one class under **Owner we chose** **(3 pts)**
+- [X] Every row says what data the job needs and which class holds it **(3 pts)**
+- [X] Step 2 lists every job with no honest owner, or says `- None.` **(1 pt)**
+- [X] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [X] Committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
 
 Don't change your class diagram yet. The table is your *before*.
 
@@ -65,7 +55,6 @@ The six jobs, in this order:
 | Know which order is next | - | barista.queueMethods() | - | - | Barista | The list of pending orders in the queue 'Barista' | 
 | Count how many of each menu item sold today | - | - | Order.findCompletedToday() OrderItem.getQuantity() MenuItem.getName() | Employee | the list of quantities of each menu item that was used: 'Employee' |
 
-How to fill the cells:
 # Week 7: Group Redesign
 ### ICS372 | Object-Oriented Design and Implementation
 
@@ -75,10 +64,10 @@ How to fill the cells:
 
 Check every box before you commit. **6 of tonight's 20 group points.**
 
-- [ ] Item 1 has a row for every owner you changed, or says `No owner changed.` with one sentence **(2 pts)**
-- [ ] Item 2's diagram has the method for every owner in your table, with a return type, and renders on GitHub **(3 pts)**
-- [ ] Item 3 is two or three sentences on what changed **(1 pt)**
-- [ ] Everything new is under `### After the regroup`, committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
+- [X] Item 1 has a row for every owner you changed, or says `No owner changed.` with one sentence **(2 pts)**
+- [X] Item 2's diagram has the method for every owner in your table, with a return type, and renders on GitHub **(3 pts)**
+- [X] Item 3 is two or three sentences on what changed **(1 pt)**
+- [X] Everything new is under `### After the regroup`, committed to `docs/week-07/group-artifact.md` **(required: nothing is graded without it)**
 
 ---
 
@@ -98,12 +87,12 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 | Job | Owner before | Owner now | Rule that moved it |
 |---|---|---|---|
-| Say whether a menu item can be sold | MenuItem | Ingredients | 2 | 
-| Say what an item costs as the customer configured it | Employee | OrderItem | 2 | 
-| Say what an item uses up, its customizations included | Order | OrderItem | 2 |
-| Use up the ingredients for a completed order | Ingredients | No owner changed | 2 & 4 | 
-| Know which order is next | Barista | Queue | 4 | 
-| Count how many of each menu item sold today | Employee | Sales | 4 |
+| Say whether a menu item can be sold | MenuItem | No Owner Changed | 2 - MenuItem determines the items availability and uses ingredient availability as support | 
+| Say what an item costs as the customer configured it | Employee | OrderItem | 1 & 2 | 
+| Say what an item uses up, its customizations included | Order | OrderItem | 2 & 4 |
+| Use up the ingredients for a completed order | Ingredients | No owner changed | 2 - Ingredients hold and updates ingredient quantities | 
+| Know which order is next | Barista | Queue | 1 & 4 | 
+| Count how many of each menu item sold today | Employee | Sales | 1 & 5 |
 
 
 
@@ -113,7 +102,98 @@ If no owner changed, write `No owner changed.` and one sentence saying which rul
 
 **2. The updated class diagram.** Copy the diagram from `docs/design/class-model.md` and change it so every job's owner has the method for that job, with parameters and a return type. Add any class you need, remove any class that lost all its jobs, and connect every class that calls another with a line.
 
+```mermaid
+classDiagram
+	class Ingredients {
+	    +name: String;
+	    +quantity: int; 
+	    -lowInvThreshold: int; 
+	    +addQuantity(quantity: int): void;
+        +useQuantity(quantity: int): void;
+        +isAvailable(): boolean
+        +markOut(): List~MenuItem~
+
+	}
+	
+	class Employee {
+	    +name: String; 
+	    +position: String; 
+	    +viewOrder(order: Order): void; 
+	    +completeOrder(order: Order): void;
+	}
+	
+	class Customer {
+            +loyaltyStatus: boolean
+			+name: String
+			+phoneNumber: String
+        }
+
+        class Order {
+			+customer: Customer
+			+items: List<OrderItem>
+            +confirmationNumber: String
+            +status: String
+            +dateAndTime: LocalDateTime
+            +total: BigDecimal
+            +note: String
+            +addItem(item: OrderItem): void
+            +removeItem(item: OrderItem) : void
+            +calculateTotal() : BigDecimal
+            +findCompletedToday(): List~Order~
+        }
+            
+        class OrderItem {
+            +quantity: int
+            +milk: String
+            +size: String
+            +syrup: String
+            +associatedPrice: BigDecimal
+            +calculateSubTotal(): BigDecimal
+            +getCost(): BigDecimal
+            +getQuantity(): int
+            +getIngredientsUsed(): Map~Ingredients, Integer~
+        }
+
+        class MenuItem {
+            +name: String; 
+            +price: BigDecimal;
+            +status: String; 
+            +updatePrice(newPrice: BigDecimal): boolean;
+            +updateName(newName: String): boolean; 
+            +setAvailable(available: boolean): void
+            +isAvailable(): boolean
+            +getChoices(): List <String>
+            +markUnavailableIfUses(ingredient: Ingredients): boolean
+        } 
+
+        class Queue {
+        -pendingOrders: List~Order~
+        +addOrder(order: Order): void
+        +removeOrder(order: Order): void
+        +getNextOrder(): Order
+    }
+
+    class Sales {
+     +countItemsSoldToday(): Map~MenuItem, Integer~
+    }
+
+
+    Customer "1" --> "0..*" Order : places
+    Order "1" *-- "1..*" OrderItem : contains
+    OrderItem "0..*" --> "1" MenuItem : represents
+    MenuItem "0..*" --> "0..*" Ingredients : uses
+    Employee "1" --> "0..*" Order : prepares
+    Queue "1" o-- "0..*" Order : tracks pending orders
+    Ingredients ..> MenuItem : checks affected items
+    Sales ..> Order : reads completed orders
+    Sales ..> OrderItem : counts quantities
+    Sales ..> MenuItem : identifies menu items
+```
+
 **3. What changed.** Two or three sentences: which class lost the most jobs, which gained the most, and why.
+
+After our regroup, Employee and Barista lost responsibilities because actors shouldn't perform jobs of the system. OrderItem gained responsibilities because it holds the configured item's price and customizations while Queue and Sale was added to handle pending orders and daily sale count.
+
 - **UC-1 through UC-4:** the method that did this job in that person's diagram, written `Class.method()`. If it was a `MISSING` proposal, write `proposed:` before it. If the job doesn't happen in that use case, write a dash.
 - **Owner we chose:** exactly one class.
 - **Data it needs:** what the job has to know, and which class in your model holds that today.
@@ -144,8 +224,10 @@ None.
 
 ## 4. What We're Not Sure About
 
-*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
+One thing we aren't sure about is how the getIngredientsUsed() method will determine the exact quantities of ingredients needed for different drink sizes and customizations. Our current design stores the item's quantity, size, milk, and syrup but we still need to make sure our model can translate those choices into ingredient quantities. 
 
-[Your response here]
+Another thing is how will MenuItem handle ingredients becoming unavailable especially when the ingredient is a optional customization. Making an entire menu item unavailable just because an optional syrup is out could prevent customers from ordering drinks that can still be made.
+
+We are leaving these implementation details open because our main focus is assigning responsibilities to the right classes.
 
 

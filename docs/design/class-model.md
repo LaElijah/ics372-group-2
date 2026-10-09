@@ -1,25 +1,11 @@
 # Class Model — Group 2
 ### ICS372 | Fall 2026
 **Members:** Thomas Yang, Abenezer Aregay, Elijah Allotey, Houreratou Bande
-**Last updated:** 10/2/2026 — Diagram
-
----
-
-*This file lives at `docs/design/class-model.md` and begins in Week 6. It is a **living document**.*
-
-*This is the solution, not the problem. Everything the domain model refuses is allowed here: interfaces, abstract classes, method signatures, visibility, and types that answer to nothing in the business at all.*
-
-*The mapping from `domain-model.md` is deliberately not one to one. One domain entity can become one class, several, or none — a seasonal drink is real in the business and is data in the design. Some classes trace to no domain entity whatsoever.*
-
-*The rule that keeps this document honest: **every class traces to something.** Either an entity in the domain model, or a stated technical reason. A class that traces to neither is one you have not justified.*
-
-*Delete every italic instruction and every bracketed placeholder before you commit.*
+**Last updated:** 10/9/2026 — Diagram
 
 ---
 
 ## 1 · The Diagram
-
-*One Mermaid class diagram. Interfaces, abstract classes, concrete classes, fields, method signatures, relationships with multiplicity.*
 
 ```mermaid
 classDiagram
@@ -92,58 +78,117 @@ classDiagram
 
 ## 2 · The Classes
 
-*One entry per class. Repeat this block.*
+### Customer
 
-### [ClassName]
+**Responsibility:** Responsible for storing customer information and loyalty status.
 
-**Responsibility:** [One sentence. If you cannot state it in one sentence, the class is doing too much.]
+**Traces to:** Customer
 
-**Traces to:** [A domain entity by name, **or** a technical reason — "nothing in the business; this exists to read the JSON file at startup."]
+**Kind:** Concrete class - Represents a customer with their own information and loyalty status.
 
-**Kind:** [concrete class / abstract class / interface] — [and one line on why this kind and not another]
+**Fields:** loyaltyStatus: boolean | name: String | phoneNumber: String
 
-**Fields:** [name and type]
+**Methods:** No method currently defined.
 
-**Methods:** [signature and one line on what each does]
+### Order
+
+**Responsibility:** Responsible for managing the state and contents of a customer's order
+
+**Traces to:** Order
+
+**Kind:** Concrete class - Represents an individual order placed by a customer
+
+**Fields:** customer: Customer | items: List<OrderItem> | confirmationNumber: String | status: String | dateAndTime: LocalDateTime | total: BigDecimal | note: String
+
+**Methods:** addItem(item: OrderItem): void - adds an item to the order | removeItem(item: OrderItem): void - removes an item from the order | calculateTotal(): BigDecimal - calculates the total cost of the order.
+
+### OrderItem
+
+**Responsibility:** Responsible for storing the details, customizations, and associated price of a menu item within an order
+
+**Traces to:** OrderItem
+
+**Kind:** Concrete class - Represents a menu item configured for a specific order, including its selected options and quantity
+
+**Fields:** quantity: int | milk: String | size: String | syrup: String | associatedPrice: BigDecimal
+
+**Methods:** calculateSubTotal(): BigDecimal - calculates the subtotal for this order item based on its associated price and quantity | getCost(): BigDecimal - returns the associated price of the configured item
+
+### MenuItem
+
+**Responsibility:** Responsible for storing and managing the information and availability of a menu item
+
+**Traces to:** MenuItem
+
+**Kind:** Concrete class - Represents a specific item offered on the coffee shop's menu
+
+**Fields:** name: String | price: BigDecimal | status: String
+
+**Methods:** updatePrice(newPrice: BigDecimal): boolean - updates the item's menu price | updateName(newName: String): boolean - updates the item's name | setAvailable(available: boolean): void - changes whether the item is available | isAvailable(): boolean - returns whether the item is available for purchase | getChoices(): List<String> - returns the ingredients used by the item 
+
+### Ingredients
+
+**Responsibility:** Responsible for storing and managing the ingredient inventory information
+
+**Traces to:** Ingredients
+
+**Kind:** Concrete class - Represents an ingredient whose quantity can be tracked and updated
+
+**Fields:** name: String | quantity: int | lowInvThreshold: int
+
+**Methods:** addQuantity(amount: int): void - increases the available quantity when inventory is restocked | useQuantity(amount: int): void - decreases the available quantity when inventory is used | isAvailable(): boolean - checks whether the ingredient has stock available
+
+### Employee
+
+**Responsibility:** Responsible for completing customer orders
+
+**Traces to:** Employee
+
+**Kind:** Concrete class - Represents an employee who interacts with orders
+
+**Fields:** name: String | position: String
+
+**Methods:** viewOrder(order: Order): void - allows the employee to view an order's details | completeOrder(order: Order): void - marks an order as completed
 
 ---
 
 ## 3 · The Mapping
 
-*The audit that keeps this file connected to the domain model. Re-run it whenever either document changes.*
-
 **Domain entity to class:**
 
 | Domain entity | Becomes | Why |
 |---|---|---|
-| [entity] | [one class / several classes / no class, it is data on X] | [what drove the decision] |
+| Customer | Customer | Stores customer information and loyalty status |
+| Order| Order | Represents an order and manages its content, status, and total |
+| OrderItem | OrderItem | Stores the quantity, customizations, and associated price of an item within an order |
+| MenuItem | MenuItem | Represents a product offered on the menu, including its current price and availability |
+| Ingredients | Ingredients | Tracks ingredient quantities and availability |
+| Employee | Employee | Represents an employee who views and completes orders |
 
 **Classes with no domain entity behind them:**
 
 | Class | Technical reason |
 |---|---|
-| [ClassName] | [what it exists for] |
+| None Currently | All classes in the design traces to an domain entity |
 
 **Domain entities that became no class at all:**
 
 | Entity | Where it went instead |
 |---|---|
-| [entity] | [e.g. an attribute on another class, a value, a configuration] |
+| None | All domain entities have a corresponding class |
 
-*Every domain entity must appear in one of the tables above. An entity that quietly disappeared between the two documents is the failure this audit exists to catch.*
 
 ---
 
 ## 4 · Decisions Worth Defending
 
-*The choices someone could reasonably have made differently. Interface versus abstract class, where a responsibility landed, what you chose not to share.*
 
-### [The decision]
+### Storing the associated price in OrderItem
 
-**What we did:** [one or two sentences]
+**What we did:** We gave OrderItem an associatedPrice field to store the price of the configured item in that specific order. MenuItem will retain the current menu price, while OrderItem perserves the price associated with the order item
 
-**What we chose against:** [the real alternative, stated fairly]
+**What we chose against:** We chose not to rely only on the MenuItem's price when determining the price of an existing order item
 
-**Why:** [what actually drove it — not "it seemed cleaner"]
+**Why:** The menu price and the associated price serve different purposes. Keeping associated price on OrderItem allows the order item to keep its own price rather than depending on later menu price changes
 
-**What would change our minds:** [the requirement or discovery that would make the other choice right]
+**What would change our minds:** If certain requirements like existing orders must always use the latest menu price were to show up then we would need to reconsider how and when OrderItem's associated price is updated.

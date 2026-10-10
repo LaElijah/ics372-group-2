@@ -208,17 +208,13 @@ None.
 
 ## 2. How We Got Here
 
-*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
-
-[Your response here]
+Something we realized as we made our responsibility tables is that classes like employee were getting too many responsibilities. Before the rework, we were forced to use what we had and see the gaps that we left open. By the time we reached rework, we changed four of the six job owners. We created Queue and Sales to help decrease the multiple responsibilities Employee had. We had made it responsible for too much. Dealing with keeping track of orders, being barista, and collecting the data that goes through it. On the other hand, OrderItem, MenuItem, Ingredients, and Order are classes we think do have one job. After regrouping, we recognized that we weren’t using OrderItem for the responsibility it was made for. We had multiple times when we made another class to tell us about orderItem.  Instead of going to the class that knows the customized item and its price.
 
 ---
 
 ## 3. Where We Disagreed
 
-*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
-
-[Your response here]
+One valuable disagreement that was resolved was over who should own the price of a customized item. We had it as Employees job before the regroup due to it dealing with orders. After we regrouped, half the group thought that it made more sense for it to be Orders job to know. This was mainly due to it being the class that will list that information, but it was brought up that we are using a class for another class's information. OrderItem holds the information we want, so it would be the class responsible for getting the price of a customized item. This helped with the next job we had to decide on. It was about the ingredients used by a customized item. It made sense that it was a similar situation where we gave OrderItems responsibility to another class and ended up changing it.
 
 ---
 

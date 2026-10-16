@@ -27,12 +27,13 @@ Each of your sketches decided, alone, how the classes in one use case get hold o
 Exactly these five columns. The example row is from the library and shows only the shape.
 
 | Class | Calls | How it gets it | Where that object comes from | Use cases |
-|Employee|Order|handed in on the call|The order object is passed as the order parameter to completeOrder(order)|UC-2|
-|Employee|Queue|reaches for it|Proposed static reference Queue.current|UC-2|
-|Employee|Sales|handed in when built|A sales object is passed to the Employee constructor and stored in a field|UC-3|
-|Employee|Order|handed in on the call|The Order object is passed as a parameter to the method that uses it like completeOrder(order)|UC-1,UC-2|
-|Ingredients|MenuItem|handed in when built|MenuItem objects are passed to the Ingredients constructor and stored in menuItems |UC-4|
-|OrderItem|MenuItem|nanded in when built|A MenuItem object is passed to the OrderItem constructor and stored in a field|UC-1|
+|---|---|---|---|---|
+|Employee|Order|handed in on the call|The order object is passed as the order parameter to completeOrder(order)|UC-2| 
+|Employee|Queue|reaches for it|Proposed static reference Queue.current|UC-2| 
+|Employee|Sales|handed in when built|A sales object is passed to the Employee constructor and stored in a field|UC-3| 
+|Employee|Order|handed in on the call|The Order object is passed as a parameter to the method that uses it like completeOrder(order)|UC-1,UC-2| 
+|Ingredients|MenuItem|handed in when built|MenuItem objects are passed to the Ingredients constructor and stored in menuItems |UC-4| 
+|OrderItem|MenuItem|nanded in when built|A MenuItem object is passed to the OrderItem constructor and stored in a field|UC-1| 
 |Sales|Order|handed in when built|A list of Order objects is passed to the Sales constructor and stored in a field|UC-3|
 
 - **How it gets it** is exactly one of the five values from the sketch handout: `handed in on the call`, `handed in when built`, `handed back by a call`, `makes its own`, `reaches for it`.

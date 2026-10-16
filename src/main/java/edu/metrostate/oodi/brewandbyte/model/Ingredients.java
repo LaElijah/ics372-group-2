@@ -6,13 +6,13 @@ public class Ingredients {
 	private final String name;
 	private final int quantity;
 	private final int lowInvThreshold;
-	private final List<MenuItem> menuItems;
+	private final Menu menu;
 	
-	public Ingredients(String name, int quantity, int lowInvThreshold, List<MenuItem> menuItems) {
+	public Ingredients(String name, int quantity, int lowInvThreshold, Menu menu) {
 		this.name = name;
 		this.quantity = quantity;
 		this.lowInvThreshold = lowInvThreshold;
-		this.menuItems = menuItems;
+		this.menu = menu;
 	}
 	
 	public List<MenuItem> markOut() {

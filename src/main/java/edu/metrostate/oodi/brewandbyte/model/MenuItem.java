@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class MenuItem {
-	private final String name;
+	private String name;
 	private BigDecimal price;
 	private String status;
 	

@@ -13,8 +13,8 @@ public class ShopSetup {
 		MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 		
 		List<MenuItem> menuItems = Arrays.asList(coffee,latte);
-		
-		Ingredients milk = new Ingredients("Milk", 100, 10, menuItems);
+		Menu menu = new Menu(menuItems);
+		Ingredients milk = new Ingredients("Milk", 100, 10, menu);
 		
 		OrderItem coffeeItem = new OrderItem(coffee, 1, "none", "Medium", "none", new BigDecimal("3.00"));
 		OrderItem latteItem = new OrderItem(latte, 1, "oat", "large", "vanilla", new BigDecimal("4.00"));

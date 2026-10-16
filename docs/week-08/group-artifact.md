@@ -11,12 +11,12 @@
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the group redesign.
 
-- [ ] Step 1 has one row for every class-calls-class pair in all four use cases, each with exactly one of the five values under **How it gets it** **(3 pts)**
-- [ ] Every row of step 1 says where that object comes from **(2 pts)**
-- [ ] Step 2: every class in `model/` has the fields and constructor your table says, and `ShopSetup.java` creates every object the four use cases need **(4 pts)**
-- [ ] Step 3 has the last line of `./gradlew compileJava` **(1 pt)**
-- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
-- [ ] Committed: `docs/week-08/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
+- [X] Step 1 has one row for every class-calls-class pair in all four use cases, each with exactly one of the five values under **How it gets it** **(3 pts)**
+- [X] Every row of step 1 says where that object comes from **(2 pts)**
+- [X] Step 2: every class in `model/` has the fields and constructor your table says, and `ShopSetup.java` creates every object the four use cases need **(4 pts)**
+- [X] Step 3 has the last line of `./gradlew compileJava` **(1 pt)**
+- [X] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [X] Committed: `docs/week-08/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
 ---
 
@@ -64,6 +64,62 @@ BUILD SUCCESSFUL in 5s
 
 Commit and push the artifact and the code together.
 
+## Checklist
+
+Check every box before you commit. **6 of tonight's 20 group points.**
+
+- [X] Item 1 has the count from the regroup and names every class in it **(2 pts)**
+- [X] Item 2: the test setup is written, follows the rule, and `./gradlew compileTestJava` succeeds **(3 pts)**
+- [X] Item 3 has the new count and one sentence on why **(1 pt)**
+- [X] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
+
+---
+
+Don't start a new file or delete your first version's work. Put everything new under this heading at the very end of section 1:
+
+### After the regroup
+
+**The five rules from the regroup:**
+
+1. **An object gets what it needs in one of five ways.** Handed in on the call, handed in when built, handed back by a call, makes its own, or reaches for it. The first three show up in a signature. Reaching for it doesn't.
+2. **A constructor is a list of what a class needs.** If the class reaches for something, the list is wrong, and the next programmer believes it.
+3. **"There's exactly one" is a claim about the business.** The shop has one menu. A test needs its own anyway. One menu in the shop is not the same as one `Menu` object in the program.
+4. **Decide which one in one place.** `ShopSetup` decides for the shop. Each test's setup decides for that test. Nothing else should have to.
+5. **Even when there really is exactly one, hand it in.** Then "exactly one" is decided once, in `ShopSetup`, and a test can hand in its own.
+
+**1. The count, before.** Copy the line your group typed in chat during the regroup: the number and the class names.
+
+1 class to class relationship being Ingredients calls MenuItem.
+
+**2. Make the setup work.** Change the code so the setup can follow the rule, then write it.
+
+The menu class was added to hold the coffee shop's menu items. ShopSetup creates the menu and passes it to Ingredients through its constructor. PlaceOrderTest creates its own menu with one latte and passes it to its own Ingredients object. It also creates an order containing one oat milk latte. It was compiled with ./gradlew compileTestJava.
+
+- Every class in UC-1 gets what it calls **handed in**, when built or on the call. Nothing in UC-1 reaches for anything, and nothing in UC-1 makes its own copy of something another class also uses.
+- Update `ShopSetup` so it still builds the shop.
+- Write the setup in `src/test/java/edu/metrostate/oodi/brewandbyte/model/PlaceOrderTest.java`, inside this shape. Replace the comment with your setup, and leave the rest exactly as it is:
+
+```java
+package edu.metrostate.oodi.brewandbyte.model;
+
+import org.junit.jupiter.api.Test;
+
+class PlaceOrderTest {
+
+    @Test
+    void refusesAnItemThatCannotBeSold() {
+        // Setup: a menu with one latte, oat milk out, an order for one oat milk latte.
+    }
+}
+```
+
+- `./gradlew compileTestJava` succeeds. Don't run the test; the method bodies are still stubs.
+
+Do UC-1 first, and commit. Then, if there's time, do the same for anything else your code reaches for.
+
+**3. The count, after.** A second test needs a menu with two items on it and nothing out. Starting from the code you just committed, how many classes, other than `ShopSetup`, would have to change before its setup could be written? Give the number, the class names (or `none`), and one sentence on why.
+
+0 classes because no classes other than ShopSetup need to change because the test can create its own two MenuItem objects, put them in a Menu, and pass that menu to Ingredients using our existing constructors.
 
 ---
 

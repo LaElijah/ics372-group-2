@@ -33,7 +33,7 @@ Exactly these five columns. The example row is from the library and shows only t
 |Employee|Sales|handed in when built|A sales object is passed to the Employee constructor and stored in a field|UC-3| 
 |Employee|Order|handed in on the call|The Order object is passed as a parameter to the method that uses it like completeOrder(order)|UC-1,UC-2| 
 |Ingredients|MenuItem|handed in when built|MenuItem objects are passed to the Ingredients constructor and stored in menuItems |UC-4| 
-|OrderItem|MenuItem|nanded in when built|A MenuItem object is passed to the OrderItem constructor and stored in a field|UC-1| 
+|OrderItem|MenuItem|handed in when built|A MenuItem object is passed to the OrderItem constructor and stored in a field|UC-1| 
 |Sales|Order|handed in when built|A list of Order objects is passed to the Sales constructor and stored in a field|UC-3|
 
 - **How it gets it** is exactly one of the five values from the sketch handout: `handed in on the call`, `handed in when built`, `handed back by a call`, `makes its own`, `reaches for it`.
@@ -125,24 +125,21 @@ Do UC-1 first, and commit. Then, if there's time, do the same for anything else 
 
 ## 2. How We Got Here
 
-*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
+Our group needed to do a thorough reconciliation of our renewed sequence diagram that fit our use cases and our new proposed sequence diagrams. First, our group honed in on what functions we would use to complete each use case, given that last week we had decided what data would be needed to complete those functions and what classes would have ownership over those functions, we decided in this round of group work, how exactly would we construct the required objects such that we could come to meaningful conclusions about the structure of our reconciled sequence diagram. As we worked throughout the night, we as a group discussed how we would handle the construction of the Order object. Our group reasoned that our program seems to revolve around how orders are created, manipulated, and then finally handled. This led us to how we decided upon Employee being the main class that handles order object creation and manupulation. For example, Employee takes in an order object in its completeOrder function, and the status of the order is changed, Employee has the ability to modify order but Order stores the order information and status for later use. Relating to Order is the OrderItem class, orders have a list of OrderItems, OrderItem represents an item to be handled specifically in an order and is created from a selection of menu items, this OrderItem has a constructor that takes menu item as a parameter and is stored in a field on Order item. Orders for a given customers purchase needed to be stored, so we decided on a Sales object, a list of Order objects would be passed to the Sales constructor and then stored in a field, by structuring our program as such, we could then store the orders where the purchase was completed (ignoring the actual state of completion of the order as we decided that responsibility would lie with the barista, the stock count of ingredients, and our order archival method to be implemented.) in the newly created Employee object. Then, we decided on how we would implement a queue for Orders. We talked about if we would implement queue as a static object or not, and for simplicity sake and the fact that its likely that we would have a shared queue between baristas that a static variable would make the most sense. The order queue could have functionality to insert orders, and pop them off the queue, given its static nature, barista employees could always have access to a shared source of truth for the queue and could be reached from the system wherever its required. 
 
-[Your response here]
 
 ---
 
 ## 3. Where We Disagreed
 
-*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
 
-[Your response here]
+An example of where our group disagreed was when deciding how we would implement the Queue class. At first, the queue class was proposed as possibly having multiple instances, and each queue could have different types of orders, such as a queue that is specifically for barista drinks, and perhaps a queue that supports food items for a different station, but we brought up the fact that first, creating multiple instances could raise issues when it came to synchronization between queues and different objects using different queues, also in terms of development speed, creating functionality that supports multiple different types of queues could prove to be difficult, so we ended up deciding on making a single Queue object that would be a static variable in our program that different objects could access. 
 
 ---
 
 ## 4. What We're Not Sure About
 
-*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
 
-[Your response here]
+Some concerns we have for our program is the structure of how orders are constructed, and who specifically bears responsibility, for example, should Employee be solely burdened with the responsibility to create order objects, or are there any other object sources that we should be concerned with? Also, while having a static queue is helpful for development speed, is having one single queue a source of concern and a lack of flexibility in later development cycles, or is this a design perk given that it solves the problem of synchronization for each station? do we need to extend the Order class to support different types of orders so that the queue can adequately support different types of issues. Something were leaving for later is breaking up the Employee class so that we can specialize into barista, manager etc.
 
 

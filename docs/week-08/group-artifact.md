@@ -1,4 +1,4 @@
-# Group Artifact - Week 8 Round 1
+# Group Artifact - Week 8
 **Group:** 2
 **Members present:** Elijah Allotey, Thomas Yang, Abenezer Aregay, Houreratou Bande
 **Date:** 10/15/2026

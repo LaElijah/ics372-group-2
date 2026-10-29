@@ -146,7 +146,7 @@ Can be the end of the process or be sent depending on payment acceptance
 **Assumptions:** N/A
 
 ---
-### UC-C3 Place Order and Receive Confirmation Number
+### UC-C3 Place Order and Receive Confirmation Number - Similar to class UC1
 
 **Actor:** Customer
 
@@ -191,9 +191,68 @@ Rejoins step 3
 Rejoins step 7
 
 Assumptions: Payment process is undecided and is not included
+---
+
+### UC-1: Place an Order - Class Ver
+
+**Actor:** Customer
+
+**Precondition:** The customer has built an order with at least one item, and has chosen a size and customizations for every item.
+
+**Postcondition:** The order is in the barista queue with a confirmation number, and every item on it carries the price it was placed at.
+
+| Actor Action | System Response |
+|---|---|
+| **1.** Customer asks to place the order. | |
+| | **2.** System confirms that every item on the order can be sold right now. |
+| | **3.** System works out the price of each item as configured, and records that price on the order. |
+| | **4.** If the customer is a loyalty member, system applies the loyalty discount. |
+| | **5.** System records the order's total. |
+| | **6.** System gives the order a confirmation number. |
+| | **7.** System adds the order to the end of the barista queue. |
+| | **8.** System shows the customer the confirmation number and the total. |
+
+**Alternative flow 2a: An item can no longer be sold.**
+
+| Actor Action | System Response |
+|---|---|
+| | **2a1.** System tells the customer which item can no longer be sold. |
+| **2a2.** Customer removes that item or changes it to one that can be sold. | |
+
+*Rejoins the main flow at step 1.*
+
 
 ---
-### UC-B3 Mark Orders as Complete
+
+---
+### UC-2: Complete an Order - Class Ver
+
+**Actor:** Barista
+
+**Precondition:** At least one order is in the barista queue.
+
+**Postcondition:** The oldest order is complete, its ingredients have been used up, and the customer's confirmation number has been called.
+
+| Actor Action | System Response |
+|---|---|
+| **1.** Barista asks for the next order. | |
+| | **2.** System shows the oldest order in the queue: every item, its size, its customizations, and the order's note. |
+| **3.** Barista makes the order and marks it complete. | |
+| | **4.** System marks the order complete, with the time it was completed. |
+| | **5.** System uses up the ingredients for every item on the order, including the ingredients its customizations add. |
+| | **6.** System removes the order from the queue. |
+| | **7.** System calls the customer's confirmation number. |
+
+**Alternative flow 5a: An ingredient falls below its low-stock level.**
+
+| Actor Action | System Response |
+|---|---|
+| | **5a1.** System warns the manager which ingredient is running low. |
+
+*Rejoins the main flow at step 6.*
+---
+
+### UC-B3 Mark Orders as Complete - Similar to class UC-2
 
 **Actor:** Barista
 
@@ -223,6 +282,51 @@ Assumptions: Payment process is undecided and is not included
 | 1c. Barista waits for an order to become available | |
 
 Assumptions: Orders cannot be changed once it has been placed (requirement 3.4)
+
+---
+### UC-3: View the Day's Sales - Class Ver
+
+**Actor:** Manager
+
+**Precondition:** A manager is using the system.
+
+**Postcondition:** The manager has seen how many of each menu item sold today, and how much money came in.
+
+| Actor Action | System Response |
+|---|---|
+| **1.** Manager asks for today's sales. | |
+| | **2.** System finds every order completed today. |
+| | **3.** System counts how many of each menu item sold today. |
+| | **4.** System adds up the money taken today. |
+| | **5.** System shows the manager each menu item with how many sold, and the day's total. |
+
+**Alternative flow 2a: No orders were completed today.**
+
+| Actor Action | System Response |
+|---|---|
+| | **2a1.** System notes that no orders have been completed today, so every menu item has sold zero and the day's total is zero. |
+
+*Rejoins the main flow at step 5.*
+
+---
+
+### UC-4: Mark an Ingredient Out - Class Ver
+
+**Actor:** Barista
+
+**Precondition:** A barista is using the system.
+
+**Postcondition:** The ingredient is marked out, and nothing that needs it is offered to customers.
+
+| Actor Action | System Response |
+|---|---|
+| **1.** Barista picks an ingredient and marks it out. | |
+| | **2.** System records that the ingredient is out. |
+| | **3.** System stops offering every menu item that needs the ingredient, and every customization that uses it. |
+| | **4.** System shows the barista what is no longer offered. |
+
+    
+
 
 ## 4 · Non-Functional Requirements
 

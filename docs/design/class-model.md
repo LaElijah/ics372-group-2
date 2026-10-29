@@ -10,6 +10,7 @@
 ```mermaid
 classDiagram
 	class Ingredients {
+        +Ingredients(name: String, quantity: int,  lowInvThreshold: int, menu: Menu)
 	    +name: String;
 	    +quantity: int; 
 	    -lowInvThreshold: int; 
@@ -21,6 +22,7 @@ classDiagram
 	}
 	
 	class Employee {
+        +Employee(name: String, position: String, sales: Sales)
 	    +name: String; 
 	    +position: String; 
 	    +viewOrder(order: Order): void; 
@@ -28,12 +30,14 @@ classDiagram
 	}
 	
 	class Customer {
+            +CustomerCustomer(loyaltyStatus: String,  name: String, phoneNumber: String)
             +loyaltyStatus: boolean
 			+name: String
 			+phoneNumber: String
         }
 
         class Order {
+            +Order(customer: Customer, items:List<OrderItem> , confirmationNumber:String,  status: String,dateAndTime: LocalDateTime,total: BigDecimal, note: String)
 			+customer: Customer
 			+items: List<OrderItem>
             +confirmationNumber: String
@@ -48,6 +52,7 @@ classDiagram
         }
             
         class OrderItem {
+            +OrderItem(menuItem: MenuItem, quantity: int,  milk: String, size: String, syrup: String,  associatedPrice: BigDecimal)
             +quantity: int
             +milk: String
             +size: String
@@ -60,6 +65,7 @@ classDiagram
         }
 
         class MenuItem {
+            +Menuitem(name: String, price: BigDecimal,  status: String)
             +name: String; 
             +price: BigDecimal;
             +status: String; 
@@ -71,7 +77,7 @@ classDiagram
             +markUnavailableIfUses(ingredient: Ingredients): boolean
         } 
 
-        class Queue {
+    class Queue {
         -pendingOrders: List~Order~
         +addOrder(order: Order): void
         +removeOrder(order: Order): void
@@ -80,6 +86,9 @@ classDiagram
 
     class Sales {
      +countItemsSoldToday(): Map~MenuItem, Integer~
+    }
+    class ShopSetup{
+        
     }
 
 
@@ -93,9 +102,7 @@ classDiagram
     Sales ..> Order : reads completed orders
     Sales ..> OrderItem : counts quantities
     Sales ..> MenuItem : identifies menu items
-
 ```
-
 ---
 
 ## 2 · The Classes
@@ -171,6 +178,8 @@ classDiagram
 **Fields:** name: String | position: String
 
 **Methods:** viewOrder(order: Order): void - allows the employee to view an order's details | completeOrder(order: Order): void - marks an order as completed
+
+### ShopSetup (TBD)
 
 ---
 

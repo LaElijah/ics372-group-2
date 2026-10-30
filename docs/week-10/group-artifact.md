@@ -99,6 +99,7 @@ Do the barista queue and the completed orders first, and commit. Then the lines 
 
 **3. The count, after.** Tomorrow the barista queue keeps its orders in a different kind of collection: an `ArrayDeque` if it uses a `List` now, or an `ArrayList` if it doesn't. Starting from the code you just committed, how many classes other than the queue's owner would have to change? Give the number, the class names (or `none`), and one sentence on why.
 
+2: Employee because they need access to the queue when looking at the next order, and Order because the class needs to add to the queue
     
 ---
 ## 2. How We Got Here

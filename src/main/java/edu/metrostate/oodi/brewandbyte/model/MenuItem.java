@@ -13,6 +13,10 @@ public class MenuItem {
 		this.price = price;
 		this.status = status;
 	}
+
+	public String getName(){
+		return name;
+	}
 	
 	public void updatePrice(BigDecimal price) {
 		throw new UnsupportedOperationException("not implemented");

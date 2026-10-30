@@ -1,6 +1,10 @@
 package edu.metrostate.oodi.brewandbyte.model;
 
 import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Sales {
 	private final List<Order> orders;
@@ -14,16 +18,16 @@ public class Sales {
         BigDecimal totalMoney = BigDecimal.ZERO;
 
         for (MenuItem menuItem : menu.getMenuItems()) {
-            soldCounts.put(menuItem.getName(), 0); // getName() belongs to MenuItem
+            soldCounts.put(menuItem.getName(), 0); 
         }
 
         for (Order order : orders) {
-            if (order.getStatus().equals("Completed") && // getStatus() belongs to Order
-                order.getDateAndTime().toLocalDate().equals(today)) { // getDateAndTime() belong to Order
-                totalMoney = totalMoney.add(order.getTotal()); // getTotal() belong to Order
+            if (order.getStatus().equals("Completed") && 
+                order.getDateAndTime().toLocalDate().equals(today)) { 
+                totalMoney = totalMoney.add(order.getTotal()); 
 
-                for (OrderItem item : order.getItems()) { // getItems() belong to Order
-                    String name = item.getMenuItem().getName(); // belong to OrderItem and MenuItem
+                for (OrderItem item : order.getItems()) { 
+                    String name = item.getMenuItem().getName(); 
                     int quantity = item.getQuantity();
                     soldCounts.put(name, soldCounts.get(name) + quantity);
                 }

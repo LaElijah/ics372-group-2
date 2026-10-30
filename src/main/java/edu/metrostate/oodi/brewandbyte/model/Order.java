@@ -3,6 +3,7 @@ package edu.metrostate.oodi.brewandbyte.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Collections;
 
 public class Order {
 	private final Customer customer;
@@ -23,5 +24,33 @@ public class Order {
 		this.dateAndTime = dateAndTime;
 		this.total = total;
 		this.note = note;
+	}
+
+	public List<OrderItem> getItems() {
+		return Collections.unmodifiableList(items);
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public LocalDateTime getDateAndTime() {
+		return dateAndTime;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void addItem(OrderItem item) {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public void removeItem(OrderItem item) {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public BigDecimal calculateTotal() {
+		throw new UnsupportedOperationException("not implemented");
 	}
 }

@@ -18,4 +18,20 @@ public class OrderItem {
 		this.syrup = syrup;
 		this.associatedPrice = associatedPrice;
 	}
+
+	public BigDecimal calculateSubTotal() {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public BigDecimal getCost() {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public MenuItem getMenuItem() {
+		return menuItem;
+	}
 }

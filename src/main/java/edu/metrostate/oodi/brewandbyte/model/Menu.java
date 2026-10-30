@@ -1,6 +1,7 @@
 package edu.metrostate.oodi.brewandbyte.model;
 
 import java.util.List;
+import java.util.Collections;
 
 public class Menu {
 	private final List<MenuItem> menuItems;
@@ -10,6 +11,6 @@ public class Menu {
 	}
 	
 	public List<MenuItem> getMenuItems() {
-		return menuItems;
+		return Collections.unmodifiableList(menuItems);
 	}
 }

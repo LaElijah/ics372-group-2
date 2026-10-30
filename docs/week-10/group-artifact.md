@@ -79,12 +79,21 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 **1. The count, before.** Copy the line your group typed in chat during the regroup: the number and the class names.
 
+0
+
 **2. The owner is the only one who can change it.**
 
 - Copy your step 1 walk table under this item. Every row that says `the collection itself` changes to one of the other four values, and the code changes to match. Leave the original table above as it was.
 - An owner that was handed its list in its constructor makes its own list instead, or keeps a copy of the one it was handed.
 - If a change breaks code that UC-1 or UC-4 uses, fix that caller the same way.
 - `./gradlew compileJava` succeeds. If `PlaceOrderTest` passed before the regroup, `./gradlew test` still passes it.
+
+| Walks it | Whose collection | What it gets | Could it change it? | Use cases |
+|---|---|---|---|---|
+| Ingredients | Order's items | a read only view | no | UC-2|
+| Ingredients | Order's customizations| a read only view| no | UC-2|                                                         
+| Menu Items  | Menu | a read only view | no | UC-3|
+| Order Items  | Order | a read only view | no | UC-3| 
 
 Do the barista queue and the completed orders first, and commit. Then the lines of an order.
 

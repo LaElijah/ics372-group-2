@@ -1,4 +1,4 @@
-# Group Artifact - Week 8
+# Group Artifact - Week 10
 **Group:** 2
 **Members present:** Elijah Allotey, Thomas Yang, Abenezer Aregay, Houreratou Bande
 **Date:** 10/29/2026

@@ -104,22 +104,23 @@ Do the barista queue and the completed orders first, and commit. Then the lines 
 
 The first thing we did was review how our classes accessed collections owned by other classes. We wanted to make sure that each class remained responsible for controlling changes to its own collection. We examined classes like Queue, Sales, Order, Menu, and MenuItem to determine how their collections were accessed.
 
-We used private fields, copies, and read only views to protect the collections. Queue was also updated to implement Iterable<Order> and return an iterator over an unmodifiable view of its pending orders.
+We used private fields, copies, and read-only views to protect the collections. Queue was also updated to implement Iterable<Order> and return an iterator over an unmodifiable view of its pending orders.
 
 This approach helped keep collection ownership within the class responsible for managing it. It also made our design more flexible because the internal collection type can change without requiring other classes to change.
 
+The problem this week required us to implement a lot of getter methods we had forgotten to add previously. When we looked at UC-2 and UC-3, they seemed structurally similar. UC-2, we all agreed that the order of the process would go Order-> OrderItem -> Ingredients. This was due to the information we needed being in OrderItem, and then from there we could know the ingredients used and apply the changes we needed to the shop's ingredients. For UC-3 MenuItems -> Order -> OrderItems. The idea behind it was needing the names of items in the menu, then getting the Order and OrderItems of the day and the information we need, which is the total and how many were sold. Behind those two, the main idea was that we take a read-only version from the getters and use that information and the deeper parts needed. That was the overall idea we agreed on before any code was made. The read-only method we decided on after doing some searching was Collections.unmodifiableList(List).
 ---
 
 ## 3. Where We Disagreed
 
-We didn't have any disagreements this week. We all agreed that each class should control changes to its own collection and that other classes should only receive the access they needed.
+We didn't have any major disagreements this week. We all agreed that each class should control changes to its own collection and that other classes should only receive the access they need. A difference that we had was simply due to time and whether we could figure out the class we needed to create. It will likely be changed in the future, but what was done for UC-2 changed. Instead of trying to create a Inventory to assist and split the job of ingredients for step 5. We decided to postpone and implement the method inside the Order class. For now it works either way, but later changes will need to be determined, thinking about the past few weeks' lessons and keeping only one job per class. The method structure remains mostly unchanged, so the disagreement is simply about location.
 
 ---
 
 ## 4. What We're Not Sure About
 
-One thing we aren't sure about is whether or not our collection access methods will continue to work for future use cases. Our Queue implements Iterable<Order> so other classes can access pending orders without modifying the collection but future requirements might need additional methods for accessing and searching orders.
+One thing we aren't sure about is whether or not our collection access methods will continue to work for future use cases. Our Queue implements Iterable<Order> so other classes can access pending orders without modifying the collection, but future requirements might need additional methods for accessing and searching orders.
 
-We also have methods that aren't fully implemented so we will need to make sure these methods work when a use case involving them shows up.
+We also have methods that aren't fully implemented, so we will need to make sure these methods work when a use case involving them shows up. Other concerns include how certain data will be held and what interfaces we plan to implement in the future when we add more complicated tasks to our system. The main struggle is making sure classes are effective but don't do too many things. It is still likely that our order class is doing too much, and that will need to be resolved before the end of the project. The main reason these issues can be deferred is that the main structure works, but as more methods get filled in, more questions get asked.
 
 

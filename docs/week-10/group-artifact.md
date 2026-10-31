@@ -8,10 +8,10 @@
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the group redesign.
 
-- [ x] Step 1 has one row for every pair of a class and a collection it walks, in UC-2 and UC-3, each with exactly one of the five values under **What it gets** **(3 pts)**
-- [ x] Every row of step 1 says `yes` or `no` under **Could it change it?** **(2 pts)**
-- [ ] Step 2: every method UC-2 and UC-3 call has a real body, and completed orders are kept somewhere UC-3 finds them **(4 pts)**
-- [ ] Step 3 has the last line of `./gradlew compileJava` **(1 pt)**
+- [x] Step 1 has one row for every pair of a class and a collection it walks, in UC-2 and UC-3, each with exactly one of the five values under **What it gets** **(3 pts)**
+- [x] Every row of step 1 says `yes` or `no` under **Could it change it?** **(2 pts)**
+- [x] Step 2: every method UC-2 and UC-3 call has a real body, and completed orders are kept somewhere UC-3 finds them **(4 pts)**
+- [x] Step 3 has the last line of `./gradlew compileJava` **(1 pt)**
 - [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
 - [ ] Committed: `docs/week-10/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
@@ -51,14 +51,14 @@ Exactly these five columns. The example row is from the library and shows only t
 
 **Step 3: It compiles.** Run `./gradlew compileJava`. Under step 3, paste the last line of its output in a code block. If it fails and you're out of time, paste the first error and one sentence on what it means.
 
-
+BUILD SUCCESSFUL in 637ms
     
 ---
 ## Checklist
 
 Check every box before you commit. **6 of tonight's 20 group points.**
 
-- [ ] Item 1 has the count from the regroup and names every class in it **(2 pts)**
+- [X] Item 1 has the count from the regroup and names every class in it **(2 pts)**
 - [ ] Item 2: nothing in UC-2 or UC-3 gets another class's collection itself, the updated walk table is in, and `./gradlew compileJava` succeeds **(3 pts)**
 - [ ] Item 3 has the new count and one sentence on why **(1 pt)**
 - [ ] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
@@ -79,7 +79,7 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 **1. The count, before.** Copy the line your group typed in chat during the regroup: the number and the class names.
 
-0
+The count typed in chat during the regroup was 0.
 
 **2. The owner is the only one who can change it.**
 
@@ -90,10 +90,10 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 | Walks it | Whose collection | What it gets | Could it change it? | Use cases |
 |---|---|---|---|---|
-| Ingredients | Order's items | a read only view | no | UC-2|
-| Ingredients | Order's customizations| a read only view| no | UC-2|                                                         
-| Menu Items  | Menu | a read only view | no | UC-3|
-| Order Items  | Order | a read only view | no | UC-3| 
+| Sales | Menu's menuItems | a read only view | no | UC-3|
+| Sales | Order's items| a read only view| no | UC-3|                                                         
+| Queue  | Order's Items | a read only view | no | UC-2|
+| Order  | MenuItem's ingredients | a read only view | no | UC-2| 
 
 Do the barista queue and the completed orders first, and commit. Then the lines of an order.
 

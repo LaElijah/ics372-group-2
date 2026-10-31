@@ -109,6 +109,7 @@ We used private fields, copies, and read-only views to protect the collections. 
 This approach helped keep collection ownership within the class responsible for managing it. It also made our design more flexible because the internal collection type can change without requiring other classes to change.
 
 The problem this week required us to implement a lot of getter methods we had forgotten to add previously. When we looked at UC-2 and UC-3, they seemed structurally similar. UC-2, we all agreed that the order of the process would go Order-> OrderItem -> Ingredients. This was due to the information we needed being in OrderItem, and then from there we could know the ingredients used and apply the changes we needed to the shop's ingredients. For UC-3 MenuItems -> Order -> OrderItems. The idea behind it was needing the names of items in the menu, then getting the Order and OrderItems of the day and the information we need, which is the total and how many were sold. Behind those two, the main idea was that we take a read-only version from the getters and use that information and the deeper parts needed. That was the overall idea we agreed on before any code was made. The read-only method we decided on after doing some searching was Collections.unmodifiableList(List).
+
 ---
 
 ## 3. Where We Disagreed

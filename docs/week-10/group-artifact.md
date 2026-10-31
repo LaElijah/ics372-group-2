@@ -12,14 +12,12 @@ Read this aloud in your room and check every box before you commit. **14 of toni
 - [x] Every row of step 1 says `yes` or `no` under **Could it change it?** **(2 pts)**
 - [x] Step 2: every method UC-2 and UC-3 call has a real body, and completed orders are kept somewhere UC-3 finds them **(4 pts)**
 - [x] Step 3 has the last line of `./gradlew compileJava` **(1 pt)**
-- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
-- [ ] Committed: `docs/week-10/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
+- [X] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [X] Committed: `docs/week-10/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
 ---
 
 ## 1. Tonight's Prompt
-
-
 
 ---
 
@@ -59,9 +57,9 @@ BUILD SUCCESSFUL in 637ms
 Check every box before you commit. **6 of tonight's 20 group points.**
 
 - [X] Item 1 has the count from the regroup and names every class in it **(2 pts)**
-- [ ] Item 2: nothing in UC-2 or UC-3 gets another class's collection itself, the updated walk table is in, and `./gradlew compileJava` succeeds **(3 pts)**
-- [ ] Item 3 has the new count and one sentence on why **(1 pt)**
-- [ ] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
+- [x] Item 2: nothing in UC-2 or UC-3 gets another class's collection itself, the updated walk table is in, and `./gradlew compileJava` succeeds **(3 pts)**
+- [x] Item 3 has the new count and one sentence on why **(1 pt)**
+- [x] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
 
 ---
 
@@ -79,7 +77,7 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 **1. The count, before.** Copy the line your group typed in chat during the regroup: the number and the class names.
 
-The count typed in chat during the regroup was 0.
+The count typed in chat during the regroup was 0 classes.
 
 **2. The owner is the only one who can change it.**
 
@@ -99,29 +97,29 @@ Do the barista queue and the completed orders first, and commit. Then the lines 
 
 **3. The count, after.** Tomorrow the barista queue keeps its orders in a different kind of collection: an `ArrayDeque` if it uses a `List` now, or an `ArrayList` if it doesn't. Starting from the code you just committed, how many classes other than the queue's owner would have to change? Give the number, the class names (or `none`), and one sentence on why.
 
-2: Employee because they need access to the queue when looking at the next order, and Order because the class needs to add to the queue
+0 classes none, all the other classes interact with the Queue through its methods and Iterable<Order> rather than its internal collection type, so changing from LinkedList to ArrayDeque would not require changes to other classes.
     
 ---
 ## 2. How We Got Here
 
-*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
+The first thing we did was review how our classes accessed collections owned by other classes. We wanted to make sure that each class remained responsible for controlling changes to its own collection. We examined classes like Queue, Sales, Order, Menu, and MenuItem to determine how their collections were accessed.
 
-[Your response here]
+We used private fields, copies, and read only views to protect the collections. Queue was also updated to implement Iterable<Order> and return an iterator over an unmodifiable view of its pending orders.
+
+This approach helped keep collection ownership within the class responsible for managing it. It also made our design more flexible because the internal collection type can change without requiring other classes to change.
 
 ---
 
 ## 3. Where We Disagreed
 
-*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
-
-[Your response here]
+We didn't have any disagreements this week. We all agreed that each class should control changes to its own collection and that other classes should only receive the access they needed.
 
 ---
 
 ## 4. What We're Not Sure About
 
-*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
+One thing we aren't sure about is whether or not our collection access methods will continue to work for future use cases. Our Queue implements Iterable<Order> so other classes can access pending orders without modifying the collection but future requirements might need additional methods for accessing and searching orders.
 
-[Your response here]
+We also have methods that aren't fully implemented so we will need to make sure these methods work when a use case involving them shows up.
 
 

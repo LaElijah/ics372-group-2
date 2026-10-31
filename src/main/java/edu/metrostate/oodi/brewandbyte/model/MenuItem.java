@@ -2,20 +2,28 @@ package edu.metrostate.oodi.brewandbyte.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Collections;
 
 public class MenuItem {
-	private String name;
+	private final String name;
 	private BigDecimal price;
 	private String status;
+	private final Map<Ingredients, Integer> ingredients = new LinkedHashMap<>();
 	
 	public MenuItem(String name, BigDecimal price, String status) {
 		this.name = name;
 		this.price = price;
 		this.status = status;
 	}
-
-	public String getName(){
+	
+	public String getName() {
 		return name;
+	}
+	
+	public Map<Ingredients, Integer> getIngredients() {
+		return Collections.unmodifiableMap(ingredients);
 	}
 	
 	public void updatePrice(BigDecimal price) {
@@ -42,5 +50,9 @@ public class MenuItem {
 		throw new UnsupportedOperationException("not implemented");
 	}
 	
+	public void addIngredient(Ingredients ingredient, int amount) {
+		ingredients.put(ingredient, amount);
+	}
 	
 }
+

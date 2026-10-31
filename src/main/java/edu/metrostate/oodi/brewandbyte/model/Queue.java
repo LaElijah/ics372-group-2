@@ -2,12 +2,19 @@ package edu.metrostate.oodi.brewandbyte.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Iterator;
 
-public class Queue {
+public class Queue implements Iterable<Order> {
 	private final List<Order> pendingOrders;
 	
 	public Queue() {
 		this.pendingOrders = new LinkedList<>();
+	}
+	
+	@Override
+	public Iterator<Order> iterator() {
+	    return Collections.unmodifiableList(pendingOrders).iterator();
 	}
 	
 	public void addOrder(Order order) {

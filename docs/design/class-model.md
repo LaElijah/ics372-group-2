@@ -12,19 +12,23 @@ classDiagram
 	class Ingredients {
         +Ingredients(name: String, quantity: int,  lowInvThreshold: int, menu: Menu)
 	    +name: String;
-	    +quantity: int; 
+	    +quantity: int;
+		+menu: Menu;
 	    -lowInvThreshold: int; 
-	    +addQuantity(quantity: int): void;
-        +useQuantity(quantity: int): void;
-        +isAvailable(): boolean
-        +markOut(): List~MenuItem~
-
+	    +addQuantity(quantity: int): boolean;
+        +useQuantity(quantity: int): boolean;
+        +markOut(): List~MenuItem~;
+		+getName(): String;
+		+getQuantity() int;
+		+isLow() boolean;
+		+isAvailable(): boolean
 	}
 	
 	class Employee {
         +Employee(name: String, position: String, sales: Sales)
 	    +name: String; 
-	    +position: String; 
+	    +position: String;
+		+createOrder(items: OrderItem[]): Order;
 	    +viewOrder(order: Order): void; 
 	    +completeOrder(order: Order): void;
 	}
@@ -34,6 +38,7 @@ classDiagram
             +loyaltyStatus: boolean
 			+name: String
 			+phoneNumber: String
+			+checkLoyalty(): boolean
         }
 
         class Order {
@@ -45,6 +50,15 @@ classDiagram
             +dateAndTime: LocalDateTime
             +total: BigDecimal
             +note: String
+			+getItems(): List<OrderItem>
+			+getNote(): String
+			+getConfirmationNumber(): String
+			+getStatus(): String
+			+getDateAndTime(): LocalDateTime
+			+getTotal(): BigDecimal
+			+markCompleted(): void
+			+getCompletedAt(): LocalDateTime
+			+consumeIngredients(): Boolean
             +addItem(item: OrderItem): void
             +removeItem(item: OrderItem) : void
             +calculateTotal() : BigDecimal
@@ -58,17 +72,25 @@ classDiagram
             +size: String
             +syrup: String
             +associatedPrice: BigDecimal
+			+consumeIngredients(): Boolean
+			+canConsumeIngredients(): Boolean
             +calculateSubTotal(): BigDecimal
             +getCost(): BigDecimal
             +getQuantity(): int
-            +getIngredientsUsed(): Map~Ingredients, Integer~
+			+getMenuItem(): MenuItem
+			+getMilk(): Ingredients
+			+getSize(): String
+			+getSyrup(): Ingredients
         }
 
         class MenuItem {
             +Menuitem(name: String, price: BigDecimal,  status: String)
             +name: String; 
             +price: BigDecimal;
-            +status: String; 
+            +status: String;
+			+ingredients:  Map<Ingredients, Integer>
+			+getName(): String
+			+getIngredients(): Map<Ingredients, Integer>
             +updatePrice(newPrice: BigDecimal): boolean;
             +updateName(newName: String): boolean; 
             +setAvailable(available: boolean): void
@@ -79,14 +101,22 @@ classDiagram
 
     class Queue {
         -pendingOrders: List~Order~
+		+Queue()
+		+iterator(): Iterator<Order> 
         +addOrder(order: Order): void
+		+completeOrder(sale: Sales): void
+		+displayNextOrder(): void
         +removeOrder(order: Order): void
         +getNextOrder(): Order
     }
 
     class Sales {
-     +countItemsSoldToday(): Map~MenuItem, Integer~
+		-orders: List<Order>
+		+addCompletedOrder(order: Order)
+		+viewDaysSales(menu: Menu): void
+ 		+countItemsSoldToday(): Map~MenuItem, Integer~
     }
+
     class ShopSetup{
         
     }

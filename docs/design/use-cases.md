@@ -291,6 +291,7 @@ sequenceDiagram
   Ingredients -->> Barista: Warn of low ingredient
   Queue ->> Queue : remove(0)
   Queue ->> Order : getConfirmationNumber()
+  Order -->> Queue : return Confirmation Number
   Queue -->> Barista: Confirmation Number displayed
 
 

@@ -250,6 +250,52 @@ Assumptions: Payment process is undecided and is not included
 | | **5a1.** System warns the manager which ingredient is running low. |
 
 *Rejoins the main flow at step 6.*
+
+---
+
+```mermaid
+sequenceDiagram
+  actor Barista
+  participant Queue
+  participant Order
+  
+
+  Barista ->> Queue: displayNextOrder()
+  Queue -->> Barista: Order displayed
+  Barista ->> Queue: completeOrder(Sales sale)
+  Queue ->> Order : markCompleted()
+  Queue ->> Order : consumeIngredients()
+  Order -->> Ingredients: Update Ingredients
+  Queue ->> Queue : remove(0)
+  Queue ->> Order : getConfirmationNumber()
+  Queue -->> Barista: Confirmation Number displayed
+
+
+  ```
+
+  ***Altervative 5a***
+  
+  ```mermaid
+sequenceDiagram
+  actor Barista
+  participant Queue
+  participant Order
+  
+
+  Barista ->> Queue: displayNextOrder()
+  Queue -->> Barista: Order displayed
+  Barista ->> Queue: completeOrder(Sales sale)
+  Queue ->> Order : markCompleted()
+  Queue ->> Order : consumeIngredients()
+  Order -->> Ingredients: Update Ingredients
+  Ingredients -->> Barista: Warn of low ingredient
+  Queue ->> Queue : remove(0)
+  Queue ->> Order : getConfirmationNumber()
+  Queue -->> Barista: Confirmation Number displayed
+
+
+  ```
+
 ---
 
 ### UC-B3 Mark Orders as Complete - Similar to class UC-2

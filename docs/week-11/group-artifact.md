@@ -25,9 +25,14 @@ Copy the steps below into **section 1 of your group artifact** and put each deli
 
 Exactly these four columns. The example row is from the library and shows only the shape.
 
-| Called from | Class it calls | What for | Part of the job? |
+Called from | Class it calls | What for | Part of the job? |
 |---|---|---|---|
-| `ReturnDesk.returnBook` | `Catalog` | marks the book as back on the shelf | yes |
+| Queue.displayNextOrder | --- |showing barista the order details as text| yes |
+| Queue.completeOrder | Order | consume ingredients and marks order as complete | yes |
+| Order.markComplete | --- |  | yes |
+| Order.consumeIngredients | Ingredients |showing barista the order details as text| yes |
+| Queue.remove(0) | --- | removes order from queue | yes | 
+| Order.getConfirmationNumber | --- | prints confirmation number | no |
 
 - **Called from** is `ClassName.methodName`.
 - **Part of the job?** is `yes` if the order isn't really complete until this happens, and `no` if the order would be complete without it and this only happens because the order was completed.

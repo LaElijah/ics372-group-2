@@ -94,6 +94,8 @@ Don't start a new file or delete your first version's work. Put everything new u
 
 **1. What the regroup showed.** For each of rules 3 to 7 that your code broke, say where in one line, and fix it. If none, write `none`.
 
+none
+
 **2. The barista's screen.** Add it: a class in `view` that prints every order in the queue, oldest first, each time an order is placed and each time one is completed. It's a listener, added in `ShopSetup`, and it gets the queue's orders the way your group decided in Week 10. `./gradlew test` succeeds.
 
 **3. What it cost.** List every file you already had that you changed to add the barista's screen, with one sentence on why each one had to change. If there were none, write `none`. Beside it, copy the case's total from your sketches: `The case: N files`.

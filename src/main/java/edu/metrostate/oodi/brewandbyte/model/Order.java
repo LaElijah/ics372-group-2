@@ -76,13 +76,13 @@ public class Order {
 	}
 	
 	public boolean consumeIngredients() {
-		Map<Ingredients, Integer> required = new LinkedHashMap<>();
+		Map<Ingredient, Integer> required = new LinkedHashMap<>();
 
 	    // Collect base ingredients, milk, and syrup for every item
 	    for (OrderItem item : items) {
 	        int quantity = item.getQuantity();
 
-	        for (Map.Entry<Ingredients, Integer> entry :
+	        for (Map.Entry<Ingredient, Integer> entry :
 	                item.getMenuItem().getIngredients().entrySet()) {
 	            required.merge(entry.getKey(),
 	                    entry.getValue() * quantity, Integer::sum);
@@ -98,15 +98,15 @@ public class Order {
 	    }
 
 	    // Check the total requirements before deducting anything
-	    for (Map.Entry<Ingredients, Integer> entry : required.entrySet()) {
+	    for (Map.Entry<Ingredient, Integer> entry : required.entrySet()) {
 	        if (!entry.getKey().hasQuantity(entry.getValue())) {
 	            return false;
 	        }
 	    }
 
 	    // Deduct all required ingredients
-	    for (Map.Entry<Ingredients, Integer> entry : required.entrySet()) {
-	        Ingredients ingredient = entry.getKey();
+	    for (Map.Entry<Ingredient, Integer> entry : required.entrySet()) {
+	        Ingredient ingredient = entry.getKey();
 	        ingredient.useQuantity(entry.getValue());
 
 	    }

@@ -2,13 +2,9 @@ package edu.metrostate.oodi.brewandbyte.model;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.Set;
 
 
-class Ingredient
+public class Ingredient
 {
 	private final String name;
 	private int quantity;

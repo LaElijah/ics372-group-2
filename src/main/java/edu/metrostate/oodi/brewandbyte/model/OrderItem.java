@@ -6,12 +6,12 @@ import java.util.Map;
 public class OrderItem {
 	private final MenuItem menuItem;
 	private final int quantity;
-	private final Ingredients milk;
+	private final Ingredient milk;
 	private final String size;
-	private final Ingredients syrup;
+	private final Ingredient syrup;
 	private final BigDecimal associatedPrice;
 	
-	public OrderItem(MenuItem menuItem, int quantity, Ingredients milk, String size, Ingredients syrup, BigDecimal associatedPrice) {
+	public OrderItem(MenuItem menuItem, int quantity, Ingredient milk, String size, Ingredient syrup, BigDecimal associatedPrice) {
 		this.menuItem = menuItem;
 		this.quantity = quantity;
 		this.milk = milk;
@@ -25,7 +25,7 @@ public class OrderItem {
 	}
 	
 	public boolean consumeIngredients() {
-		for (Map.Entry<Ingredients, Integer> entry : menuItem.getIngredients().entrySet()) {
+		for (Map.Entry<Ingredient, Integer> entry : menuItem.getIngredients().entrySet()) {
 	        if (!entry.getKey().hasQuantity(entry.getValue() * quantity)) {
 	            return false;
 	        }
@@ -39,7 +39,7 @@ public class OrderItem {
 	        return false;
 	    }
 		
-		for (Map.Entry<Ingredients, Integer> entry : menuItem.getIngredients().entrySet()) {
+		for (Map.Entry<Ingredient, Integer> entry : menuItem.getIngredients().entrySet()) {
 	        entry.getKey().useQuantity(entry.getValue() * quantity);
 	    }
 		
@@ -55,7 +55,7 @@ public class OrderItem {
 	}
 	
 	public boolean canConsumeIngredients() {
-	    for (Map.Entry<Ingredients, Integer> entry : menuItem.getIngredients().entrySet()) {
+	    for (Map.Entry<Ingredient, Integer> entry : menuItem.getIngredients().entrySet()) {
 	        if (!entry.getKey().hasQuantity(entry.getValue() * quantity)) {
 	            return false;
 	        }
@@ -84,7 +84,7 @@ public class OrderItem {
 		return menuItem;
 	}
 	
-	public Ingredients getMilk() {
+	public Ingredient getMilk() {
 		return milk;
 	}
 	
@@ -92,7 +92,7 @@ public class OrderItem {
 		return size;
 	}
 	
-	public Ingredients getSyrup() {
+	public Ingredient getSyrup() {
 		return syrup;
 	}
 	

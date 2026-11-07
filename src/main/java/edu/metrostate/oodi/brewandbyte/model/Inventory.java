@@ -12,17 +12,17 @@ import java.util.Set;
 public class Inventory 
 {
   Map<String, Ingredient> inventory = new HashMap<>();
-  Set<String> outIngredients = new HashSet(); 
+  //Set<String> outIngredients = new HashSet(); 
 	
 	public void addIngredient(Ingredient ingredient)
 	{
-	    ingredients.put(ingredient.getName(), ingredient);
+	    inventory.put(ingredient.getName(), ingredient);
 	}
 	
 	
 	public Ingredient getIngredient(String string)
 	{
-	    return ingredients.get(string);
+	    return inventory.get(string);
 	}
 
 }

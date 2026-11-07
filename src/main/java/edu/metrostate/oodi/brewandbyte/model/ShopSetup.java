@@ -43,7 +43,7 @@ public class ShopSetup {
 		latte.checkAvailability();
 		
 		OrderItem coffeeItem = new OrderItem(coffee, 1, null, "Medium", null, new BigDecimal("3.00"));
-		OrderItem latteItem = new OrderItem(latte, 1, inventory.get("Oat Milk"), "large", inventory.get("Vanilla Syrup"), new BigDecimal("4.00"));
+		OrderItem latteItem = new OrderItem(latte, 1, inventory.getIngredient("Oat Milk"), "large", inventory.getIngredient("Vanilla Syrup"), new BigDecimal("4.00"));
 		
 		List<OrderItem> orderItems = Arrays.asList(coffeeItem, latteItem);
 		

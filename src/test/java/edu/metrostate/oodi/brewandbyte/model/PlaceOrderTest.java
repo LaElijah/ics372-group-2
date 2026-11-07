@@ -18,7 +18,7 @@ public class PlaceOrderTest {
 		List<MenuItem> menuItems = Arrays.asList(latte);
 		Menu menu = new Menu(menuItems);
 		
-		Ingredients oatMilk = new Ingredients("Oat Milk", 0, 10, menu);
+		Ingredient oatMilk = new Ingredient("Oat Milk", 0, 10, menu);
 		
 		latte.addIngredient(oatMilk, 2);
 
@@ -38,7 +38,7 @@ public class PlaceOrderTest {
 	    List<MenuItem> menuItems = Arrays.asList(latte);
 	    Menu menu = new Menu(menuItems);
 
-	    Ingredients oatMilk = new Ingredients("Oat Milk", 100, 10, menu);
+	    Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
 	    latte.addIngredient(oatMilk, 2);
 
 	    OrderItem latteItem = new OrderItem(
@@ -66,7 +66,7 @@ public class PlaceOrderTest {
 
 	    Menu menu = new Menu(Arrays.asList(latte));
 
-	    Ingredients oatMilk = new Ingredients("Oat Milk", 12, 10, menu);
+	    Ingredient oatMilk = new Ingredient("Oat Milk", 12, 10, menu);
 	    latte.addIngredient(oatMilk, 2);
 
 	    OrderItem latteItem = new OrderItem(
@@ -90,8 +90,8 @@ public class PlaceOrderTest {
 	    MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 	    Menu menu = new Menu(Arrays.asList(latte));
 
-	    Ingredients oatMilk = new Ingredients("Oat Milk", 100, 10, menu);
-	    Ingredients vanillaSyrup = new Ingredients("Vanilla Syrup", 100, 10, menu);
+	    Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
+	    Ingredient vanillaSyrup = new Ingredient("Vanilla Syrup", 100, 10, menu);
 
 	    OrderItem latteItem = new OrderItem(
 	            latte, 1, oatMilk, "Large", vanillaSyrup, new BigDecimal("4.00"));

@@ -19,15 +19,18 @@ public class Menu {
 		return Collections.unmodifiableList(menuItems);
 	}
 	
-	
+	/* Requires proper item searching algorithm
+	   Suggesting updating menu list to a hashmap 
 	public MenuItem getMenuItem(String string)
 	{
 	    
-	    MenuItem item = menuItems.get(string);
+		for 
+	    MenuItem item = menuItems.find(string);
 	    if (item.isAvailable())
 	        return item;
 	    else
 	        return null;
 	        
 	}
+		*/
 }

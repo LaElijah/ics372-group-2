@@ -8,6 +8,7 @@ public class Ingredients {
 	private int quantity;
 	private final int lowInvThreshold;
 	private final Menu menu;
+	private final List<LowStockListener> listeners = new ArrayList<>();
 	
 	public Ingredients(String name, int quantity, int lowInvThreshold, Menu menu) {
 		this.name = name;
@@ -16,16 +17,27 @@ public class Ingredients {
 		this.menu = menu;
 	}
 	
+	public void addLowStockListener(LowStockListener listener) {
+        listeners.add(listener);
+    }
+	
 	public List<MenuItem> markOut() {
 		throw new UnsupportedOperationException("not implemented");
 	}
 	
-	public boolean useQuantity (int amount) {
+	public boolean useQuantity(int amount) {
 		if (quantity < amount) {
 			return false;
 		}
 		
 		quantity -= amount;
+		
+        if (isLow()) {
+            for (LowStockListener listener : listeners) {
+                 listener.onLowStock(this);
+            }
+        }
+		
 		return true;
 	}
 	

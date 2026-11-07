@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import edu.metrostate.oodi.brewandbyte.view.ManagerWarnings;
+import edu.metrostate.oodi.brewandbyte.view.PickupBoard;
 
 
 public class ShopSetup {
@@ -20,6 +22,14 @@ public class ShopSetup {
 		Ingredients oatMilk = new Ingredients("Oat Milk", 100, 10, menu);
 		Ingredients vanillaSyrup = new Ingredients("Vanilla Syrup", 100, 10, menu);
 		
+		ManagerWarnings managerWarnings = new ManagerWarnings();
+
+		coffeeBeans.addLowStockListener(managerWarnings);
+		espresso.addLowStockListener(managerWarnings);
+		regularMilk.addLowStockListener(managerWarnings);
+		oatMilk.addLowStockListener(managerWarnings);
+		vanillaSyrup.addLowStockListener(managerWarnings);
+		
 		coffee.addIngredient(coffeeBeans, 1);
 		latte.addIngredient(espresso, 1);
 		
@@ -34,6 +44,10 @@ public class ShopSetup {
 		Order order = new Order(customer, orderItems, "1001","pending", LocalDateTime.now(), new BigDecimal("7.00"), "");
 		
 		Queue queue = new Queue();
+		
+		PickupBoard pickupBoard = new PickupBoard();
+		queue.addOrderCompletedListener(pickupBoard);
+		
 		queue.addOrder(order);
 		
 		Sales sales = new Sales();

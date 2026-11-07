@@ -4,12 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 public class Queue implements Iterable<Order> {
 	private final List<Order> pendingOrders;
+	private final List<OrderCompletedListener> listeners = new ArrayList<>();
 	
 	public Queue() {
 		this.pendingOrders = new LinkedList<>();
+	}
+	
+	public void addOrderCompletedListener(OrderCompletedListener listener) {
+	    listeners.add(listener);
 	}
 	
 	@Override
@@ -22,7 +28,7 @@ public class Queue implements Iterable<Order> {
 	}
 	
 	public void completeOrder(Sales sales) {
-		if (!pendingOrders.isEmpty()) {
+	    if (!pendingOrders.isEmpty()) {
 	        Order order = pendingOrders.get(0);
 
 	        if (!order.consumeIngredients()) {
@@ -35,7 +41,9 @@ public class Queue implements Iterable<Order> {
 
 	        sales.addCompletedOrder(order);
 
-	        System.out.println(order.getConfirmationNumber());
+	        for (OrderCompletedListener listener : listeners) {
+	            listener.onOrderCompleted(order);
+	        }
 	    }
 	}
 	

@@ -27,12 +27,20 @@ Exactly these four columns. The example row is from the library and shows only t
 
 Called from | Class it calls | What for | Part of the job? |
 |---|---|---|---|
-| Queue.displayNextOrder | --- |showing barista the order details as text| yes |
-| Queue.completeOrder | Order | consume ingredients and marks order as complete | yes |
-| Order.markComplete | --- |  | yes |
-| Order.consumeIngredients | Ingredients |showing barista the order details as text| yes |
-| Queue.remove(0) | --- | removes order from queue | yes | 
-| Order.getConfirmationNumber | --- | prints confirmation number | no |
+| Queue.displayNextOrder | Order | Gets the oldest order's information | yes |
+| Queue.displayNextOrder | OrderItem | Gets the individual items and their customizations | yes |
+| Queue.displayNextOrder | MenuItem | Gets the names of the ordered menu items | yes |
+| Queue.displayNextOrder | Ingredients | Gets the names of the customized ingredients| yes |
+| Queue.completeOrder | Order | Consume the order's ingredients and marks the order completed | yes |
+| Queue.completeOrder | Sales | Records the completed order | yes |
+| Queue.completeOrder | List | Removes the completed order from the queue | yes |
+| Queue.completeOrder | OrderCompletedListener | Notifies listeners that the order is complete | no |
+| Order.consumeIngredients | OrderItem | Gets the quantities and customizations for each item| yes |
+| Order.consumeIngredients | MenuItem | Gets the ingredients required for each menu item | yes |
+| Order.consumeIngredients | Ingredients | Checks and consumes the required ingredient quantities | yes |
+| Ingredients.useQuantity | LowStockListener | Notifies listeners when an ingredient is running low | no | 
+| ManagerWarnings.onLowStock | Ingredients | Gets the name of the ingredient running low | yes |
+| PickupBoard.onOrderCompleted | Order | Gets the customer's confirmation number | yes |
 
 - **Called from** is `ClassName.methodName`.
 - **Part of the job?** is `yes` if the order isn't really complete until this happens, and `no` if the order would be complete without it and this only happens because the order was completed.

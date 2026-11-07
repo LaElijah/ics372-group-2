@@ -2,25 +2,30 @@ package edu.metrostate.oodi.brewandbyte.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 
-public class Ingredients {
+class Ingredient
+{
 	private final String name;
 	private int quantity;
 	private final int lowInvThreshold;
 	private final Menu menu;
 	private final List<LowStockListener> listeners = new ArrayList<>();
-	
-	public Ingredients(String name, int quantity, int lowInvThreshold, Menu menu) {
+	public void addLowStockListener(LowStockListener listener) {
+        listeners.add(listener);
+    }
+    
+    
+  public Ingredient(String name, int quantity, int lowInvThreshold, Menu menu) {
 		this.name = name;
 		this.quantity = quantity;
 		this.lowInvThreshold = lowInvThreshold;
 		this.menu = menu;
 	}
-	
-	public void addLowStockListener(LowStockListener listener) {
-        listeners.add(listener);
-    }
 	
 	public List<MenuItem> markOut() {
 		throw new UnsupportedOperationException("not implemented");
@@ -57,7 +62,4 @@ public class Ingredients {
 	public boolean isLow() {
 		return quantity < lowInvThreshold;
 	}
-
 }
-
-

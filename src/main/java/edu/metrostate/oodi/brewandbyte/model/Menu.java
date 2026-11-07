@@ -18,4 +18,16 @@ public class Menu {
 	public List<MenuItem> getMenuItems() {
 		return Collections.unmodifiableList(menuItems);
 	}
+	
+	
+	public MenuItem getMenuItem(String string)
+	{
+	    
+	    MenuItem item = menuItems.get(string);
+	    if (item.isAvailable())
+	        return item;
+	    else
+	        return null;
+	        
+	}
 }

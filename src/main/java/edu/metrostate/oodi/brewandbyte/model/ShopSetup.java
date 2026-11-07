@@ -12,30 +12,38 @@ import edu.metrostate.oodi.brewandbyte.view.BaristaScreen;
 public class ShopSetup {
 
 	public static void main(String[] args) {
+	
+	  Inventory inventory = new Inventory();
 		MenuItem coffee = new MenuItem("Coffee", new BigDecimal("3.00"), "Available");
 		MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 		
 		List<MenuItem> menuItems = Arrays.asList(coffee,latte);
 		Menu menu = new Menu(menuItems);
-		Ingredients coffeeBeans = new Ingredients("Coffee Beans", 100, 10, menu);
-		Ingredients espresso = new Ingredients("Espresso", 100, 10, menu);
-		Ingredients regularMilk = new Ingredients("Regular Milk", 100, 10, menu);
-		Ingredients oatMilk = new Ingredients("Oat Milk", 100, 10, menu);
-		Ingredients vanillaSyrup = new Ingredients("Vanilla Syrup", 100, 10, menu);
+		
+		inventory.addIngredient(new Ingredient("Coffee Beans", 100, 10, menu));
+		inventory.addIngredient(new Ingredient("Espresso", 100, 10, menu));
+		inventory.addIngredient(new Ingredient("Regular Milk", 100, 10, menu));
+		inventory.addIngredient(new Ingredient("Oat Milk", 100, 10, menu));
+		inventory.addIngredient(new Ingredient("Vanilla Syrup", 100, 10, menu));
 		
 		ManagerWarnings managerWarnings = new ManagerWarnings();
 
-		coffeeBeans.addLowStockListener(managerWarnings);
-		espresso.addLowStockListener(managerWarnings);
-		regularMilk.addLowStockListener(managerWarnings);
-		oatMilk.addLowStockListener(managerWarnings);
-		vanillaSyrup.addLowStockListener(managerWarnings);
+		inventory.getIngredient("Coffee Beans").addLowStockListener(managerWarnings);
+		inventory.getIngredient("Espresso").addLowStockListener(managerWarnings);
+		inventory.getIngredient("Regular Milk").addLowStockListener(managerWarnings);
 		
-		coffee.addIngredient(coffeeBeans, 1);
-		latte.addIngredient(espresso, 1);
+		inventory.getIngredient("Oat Milk").addLowStockListener(managerWarnings);
+		inventory.getIngredient("Vanilla Syrup").addLowStockListener(managerWarnings);
+		
+		coffee.addIngredient(inventory.getIngredient("Coffee Beans"), 1);
+		latte.addIngredient(inventory.getIngredient("Espresso"), 1);
+		
+		
+		coffee.checkAvailability();
+		latte.checkAvailability();
 		
 		OrderItem coffeeItem = new OrderItem(coffee, 1, null, "Medium", null, new BigDecimal("3.00"));
-		OrderItem latteItem = new OrderItem(latte, 1, oatMilk, "large", vanillaSyrup, new BigDecimal("4.00"));
+		OrderItem latteItem = new OrderItem(latte, 1, inventory.get("Oat Milk"), "large", inventory.get("Vanilla Syrup"), new BigDecimal("4.00"));
 		
 		List<OrderItem> orderItems = Arrays.asList(coffeeItem, latteItem);
 		

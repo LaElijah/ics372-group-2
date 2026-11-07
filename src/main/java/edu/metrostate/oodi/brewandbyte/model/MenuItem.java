@@ -10,7 +10,7 @@ public class MenuItem {
 	private final String name;
 	private BigDecimal price;
 	private String status;
-	private final Map<Ingredients, Integer> ingredients = new LinkedHashMap<>();
+	private final Map<Ingredient, Integer> ingredients = new LinkedHashMap<>();
 	
 	public MenuItem(String name, BigDecimal price, String status) {
 		this.name = name;
@@ -22,7 +22,18 @@ public class MenuItem {
 		return name;
 	}
 	
-	public Map<Ingredients, Integer> getIngredients() {
+	void checkAvailability()
+	{
+	    for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) 
+	    {
+	        if (entry.getKey().getQuantity() < entry.getValue())
+	        {
+	            status = "Unavailable"; 
+	        }
+	    }
+	}
+	
+	public Map<Ingredient, Integer> getIngredients() {
 		return Collections.unmodifiableMap(ingredients);
 	}
 	
@@ -39,18 +50,19 @@ public class MenuItem {
 	}
 	
 	public boolean isAvailable() {
-		throw new UnsupportedOperationException("not implemented");
+	  checkAvailability();
+		return (status == "Available");
 	}
 	
 	public List<String> getChoices() {
 		throw new UnsupportedOperationException("not implemented");
 	}
 	
-	public boolean markUnavailableIfUses(Ingredients ingredient) {
+	public boolean markUnavailableIfUses(Ingredient ingredient) {
 		throw new UnsupportedOperationException("not implemented");
 	}
 	
-	public void addIngredient(Ingredients ingredient, int amount) {
+	public void addIngredient(Ingredient ingredient, int amount) {
 		ingredients.put(ingredient, amount);
 	}
 	

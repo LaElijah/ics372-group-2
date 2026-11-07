@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import edu.metrostate.oodi.brewandbyte.view.ManagerWarnings;
 import edu.metrostate.oodi.brewandbyte.view.PickupBoard;
+import edu.metrostate.oodi.brewandbyte.view.BaristaScreen;
 
 
 public class ShopSetup {
@@ -47,6 +48,9 @@ public class ShopSetup {
 		
 		PickupBoard pickupBoard = new PickupBoard();
 		queue.addOrderCompletedListener(pickupBoard);
+		
+		BaristaScreen baristaScreen = new BaristaScreen();
+		queue.addQueueListener(baristaScreen);
 		
 		queue.addOrder(order);
 		

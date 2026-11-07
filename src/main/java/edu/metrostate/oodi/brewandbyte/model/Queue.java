@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Queue implements Iterable<Order> {
 	private final List<Order> pendingOrders;
 	private final List<OrderCompletedListener> listeners = new ArrayList<>();
+	private final List<QueueListener> queueListeners = new ArrayList<>();
 	
 	public Queue() {
 		this.pendingOrders = new LinkedList<>();
@@ -18,6 +19,10 @@ public class Queue implements Iterable<Order> {
 	    listeners.add(listener);
 	}
 	
+	public void addQueueListener(QueueListener listener) {
+	    queueListeners.add(listener);
+	}
+	
 	@Override
 	public Iterator<Order> iterator() {
 	    return Collections.unmodifiableList(pendingOrders).iterator();
@@ -25,6 +30,10 @@ public class Queue implements Iterable<Order> {
 	
 	public void addOrder(Order order) {
 		pendingOrders.add(order);
+		
+		for (QueueListener listener : queueListeners) {
+	        listener.onOrderPlaced(this);
+	    }
 	}
 	
 	public void completeOrder(Sales sales) {
@@ -43,6 +52,10 @@ public class Queue implements Iterable<Order> {
 
 	        for (OrderCompletedListener listener : listeners) {
 	            listener.onOrderCompleted(order);
+	        }
+	        
+	        for (QueueListener listener : queueListeners) {
+	            listener.onOrderCompleted(this);
 	        }
 	    }
 	}

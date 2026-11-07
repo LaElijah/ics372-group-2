@@ -7,11 +7,11 @@
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the group redesign.
 
-- [ ] Step 1 has one row for every pair of a calling method and a class it calls in your UC-2 code, each with `yes` or `no` under **Part of the job?** **(4 pts)**
-- [ ] Step 2: alternative flow 5a and step 7 have real bodies, each reaching the person through a class of its own in `view`; every call your table marks `no` tells a listener through an interface in `model`; nothing in `model` imports anything from `view` **(5 pts)**
-- [ ] Step 3 has the last line of `./gradlew test` **(1 pt)**
-- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
-- [ ] Committed: `docs/week-11/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
+- [X] Step 1 has one row for every pair of a calling method and a class it calls in your UC-2 code, each with `yes` or `no` under **Part of the job?** **(4 pts)**
+- [X] Step 2: alternative flow 5a and step 7 have real bodies, each reaching the person through a class of its own in `view`; every call your table marks `no` tells a listener through an interface in `model`; nothing in `model` imports anything from `view` **(5 pts)**
+- [X] Step 3 has the last line of `./gradlew test` **(1 pt)**
+- [X] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [X] Committed: `docs/week-11/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
 ---
 
@@ -71,10 +71,10 @@ BUILD SUCCESSFUL in 646ms
 
 Check every box before you commit. **6 of tonight's 20 group points.**
 
-- [ ] Item 1 names each thing the regroup showed that your code did, and what you changed, or says `none` **(1 pt)**
-- [ ] Item 2: the barista's screen prints the queue when an order is placed and when one is completed, as a listener added in `ShopSetup`, and `./gradlew test` succeeds **(3 pts)**
-- [ ] Item 3 lists every existing file you changed to add it, with one sentence on why, beside the case's count from your sketches **(2 pts)**
-- [ ] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
+- [X] Item 1 names each thing the regroup showed that your code did, and what you changed, or says `none` **(1 pt)**
+- [X] Item 2: the barista's screen prints the queue when an order is placed and when one is completed, as a listener added in `ShopSetup`, and `./gradlew test` succeeds **(3 pts)**
+- [X] Item 3 lists every existing file you changed to add it, with one sentence on why, beside the case's count from your sketches **(2 pts)**
+- [X] Everything new is under `### After the regroup`, committed with your code **(required: nothing is graded without it)**
 
 ---
 
@@ -100,27 +100,30 @@ none
 
 **3. What it cost.** List every file you already had that you changed to add the barista's screen, with one sentence on why each one had to change. If there were none, write `none`. Beside it, copy the case's total from your sketches: `The case: N files`.
 
-    
+Queue.java: We added a listener list and a notification method so the queue can notify the barista screen when an order is placed or completed
+ShopSetup.java: Created the BaristaScreen and registered it as a listener to the queue
+
+The case: 3 files
 
 ## 2. How We Got Here
 
-*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
+The requirement this week was to have the barista screen display the current order queue whenever an order is placed or completed. We first considered how the queue could communicate these changes to the screen. We used a listener pattern because the Queue nows when an order is added or completed but it should not know which screen is displaying the information.
 
-[Your response here]
+We created a QueueListener interface in the model and a BaristaScreen class in the view. The Queue notifies its listeners when an order is placed or completed and ShopSetup registers the barista as a listener. This allows the screen to display the queue without the Queue directly depending on the view.
 
 ---
 
 ## 3. Where We Disagreed
 
-*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
+We didn't disagree for the most part during implementing but there was discussion about how to notify the manager about low ingredients.
 
-[Your response here]
+One approach was to use IngredientsConsumedListener interface with subscribe(), unsubscribe(), and notify() methods, alongside a ManagerView interface that updates with the ingredient name. In the end we used a LowStockListener interface instead. We choose this because we only needed to notify the manager when an ingredient becomes low rather than notify them every time an ingredient was consumed. The Ingredients class manages its own listeners and notifies them when the low stock condition occurs.
 
 ---
 
 ## 4. What We're Not Sure About
 
-*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
+One thing we aren't sure about is whether the BaristaScreen should only display each order's confirmation number or more information about each order. As of right now it prints the confirmation number for every order in the queue.
 
-[Your response here]
+We are also unsure if having ShopSetup inside the model package while importing view classes fully follows the rule that a model should not depend on the view. ShopSetup is responsible for connecting the listeners and its package placement might have to be reconsidered.
 

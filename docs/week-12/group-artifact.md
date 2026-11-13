@@ -14,7 +14,7 @@ Read this aloud in your room and check every box before you commit. **14 of toni
 - [X] Step 1 has one row for every method or field the search finds that knows anything about loyalty members or discounts, or says `none` **(3 pts)**
 - [X] Step 2: an interface in `model` for the pricing rule, one class that implements it for loyalty members and one for everyone else; `Order` is handed its rule and totals itself without asking whether anyone is a member; no class but the loyalty rule's knows what the discount is **(5 pts)**
 - [X] Step 3: `LoyaltyPricingTest` has both test methods, and step 3 has the last line of `./gradlew test` **(2 pts)**
-- [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
+- [X] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
 - [X] Committed: `docs/week-12/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
 ---
@@ -79,30 +79,30 @@ Commit and push the artifact and the code together.
 Work down this list in order and check every box before you commit. **6 of tonight's 20 group points.**
 
 **Item 1: What the regroup showed (1 pt)**
-- [ ] Item 1 names each thing the regroup showed that your code did, and what you changed, or says `none`
+- [X] Item 1 names each thing the regroup showed that your code did, and what you changed, or says `none`
 
 **Item 2: It compiles and every test passes (2 pts)**
-- [ ] Everyone in the group has pushed, and the driver has pulled
-- [ ] `./gradlew test` ends with `BUILD SUCCESSFUL`, with no test deleted or commented out
-- [ ] Its last line is pasted under item 2
+- [X] Everyone in the group has pushed, and the driver has pulled
+- [X] `./gradlew test` ends with `BUILD SUCCESSFUL`, with no test deleted or commented out
+- [X] Its last line is pasted under item 2
 
 **Item 3: One home for every class (1 pt)**
-- [ ] Every class under `src/main` is in `model`, `view`, or the package that holds `Launcher`
-- [ ] Item 3 lists every class you moved or deleted, or says `none`
-- [ ] `./gradlew test` still ends with `BUILD SUCCESSFUL`
+- [X] Every class under `src/main` is in `model`, `view`, or the package that holds `Launcher`
+- [X] Item 3 lists every class you moved or deleted, or says `none`
+- [X] `./gradlew test` still ends with `BUILD SUCCESSFUL`
 
 **Item 4: The window (2 pts)**
-- [ ] (a) `mainClass` names `Launcher`, and `./gradlew run` opens the **Brew!** window
+- [X] (a) `mainClass` names `Launcher`, and `./gradlew run` opens the **Brew!** window
 - [ ] (b) `ShopSetup` has a method that builds the menu, and `ShopSetup.main` uses it
 - [ ] (c) `brew-and-byte.fxml` holds the menu list
 - [ ] (d) `BrewAndByteController` fills the list from the menu
 - [ ] (e) `BrewAndByteApplication` builds the menu and hands it to the controller
-- [ ] `./gradlew run` opens a window listing every item on your menu with its price
-- [ ] The screenshot is committed at `docs/week-12/first-screen.png` and shows in the artifact
+- [X] `./gradlew run` opens a window listing every item on your menu with its price
+- [X] The screenshot is committed at `docs/week-12/first-screen.png` and shows in the artifact
 - [ ] Item 4 names everyone in the group who has opened the window on their own computer
 
 **Committed (required: nothing is graded without it)**
-- [ ] Everything new is under `### After the regroup`, committed and pushed with your code and the screenshot
+- [X] Everything new is under `### After the regroup`, committed and pushed with your code and the screenshot
 
 ---
 
@@ -271,24 +271,26 @@ Find the first error in the output, then find it here.
 
 ## 2. How We Got Here
 
-*What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*
+We first examined our code to see where the loyalty membership was being checked and if discount logic was already implemented. We found that Customer stored the customer's loyalty status and used checkLoyalty() to determine if they were a member or not. We also saw that ShopSetup created a customer with Member status.
 
-[Your response here]
+While thinking how to implement the discount calculation we decided to use the Strategy Pattern so things would be handled separately from Order. We made a DiscountHandler interface and created two implementations. LoyaltyDiscount for members and RegularDiscount for everyone else. The loyalty implementation calculates 10% off and the regular implementation returns no discount.
+
+Adding these caused us to update our Order class to receive DiscountHandler through its constructor and use that handler when calculating the total. This allowed Order to no longer need to check whether a customer is a member or decide which discount applies.
+
+Lastly we chose ShopSetup to select the appropriate discount handler because it already creates the customer and can check their loyalty status. During this we updated existing test and created the LoyaltyPricingTest.
 
 ---
 
 ## 3. Where We Disagreed
 
-*Did any group members have a different approach? Name the disagreement, give both positions, and say how you resolved it or that you are deliberately leaving it open. If everyone agreed immediately, say so, but think carefully first: name the decision that could most plausibly have gone the other way and say why it did not.*
-
-[Your response here]
+Our group agreed to the overall design and the DiscountHandler interface. The only varying opinion was how to organize the discount implementations. With one option being a single and the other being splitting the discounts into separate classes.
 
 ---
 
 ## 4. What We're Not Sure About
 
-*What might be wrong about this? What could break later? What are you choosing to leave unresolved for now, and why is it safe to defer?*
+We aren't sure how the system should handle multiple discounts at the same time. If a customer were to qualify for a seasonal and a loyalty discount, would one take priority or would they combine.
 
-[Your response here]
+Another thing is if the correct discount handler will always be assigned when an order is created. Currently, ShopSetup checks for the loyalty status and if that selection is incorrect a loyalty member could end up paying full.
 
 

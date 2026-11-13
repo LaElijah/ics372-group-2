@@ -27,7 +27,7 @@ tasks.withType<JavaCompile> {
 
 application {
     mainModule.set("edu.metrostate.oodi.brewandbyte")
-    mainClass.set("edu.metrostate.oodi.brewandbyte.CoffeeShopApplication")
+    mainClass.set("edu.metrostate.oodi.brewandbyte.BrewAndByteApplication")
     applicationDefaultJvmArgs = listOf("--enable-native-access=javafx.graphics")
 }
 

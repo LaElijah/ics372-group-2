@@ -73,7 +73,7 @@ public class OrderItem {
 	}
 	
 	public BigDecimal getCost() {
-		throw new UnsupportedOperationException("not implemented");
+		return associatedPrice;
 	}
 	
 	public int getQuantity() {

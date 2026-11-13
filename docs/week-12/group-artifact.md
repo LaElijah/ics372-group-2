@@ -11,11 +11,11 @@
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the second handout, after the break.
 
-- [ ] Step 1 has one row for every method or field the search finds that knows anything about loyalty members or discounts, or says `none` **(3 pts)**
-- [ ] Step 2: an interface in `model` for the pricing rule, one class that implements it for loyalty members and one for everyone else; `Order` is handed its rule and totals itself without asking whether anyone is a member; no class but the loyalty rule's knows what the discount is **(5 pts)**
-- [ ] Step 3: `LoyaltyPricingTest` has both test methods, and step 3 has the last line of `./gradlew test` **(2 pts)**
+- [X] Step 1 has one row for every method or field the search finds that knows anything about loyalty members or discounts, or says `none` **(3 pts)**
+- [X] Step 2: an interface in `model` for the pricing rule, one class that implements it for loyalty members and one for everyone else; `Order` is handed its rule and totals itself without asking whether anyone is a member; no class but the loyalty rule's knows what the discount is **(5 pts)**
+- [X] Step 3: `LoyaltyPricingTest` has both test methods, and step 3 has the last line of `./gradlew test` **(2 pts)**
 - [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
-- [ ] Committed: `docs/week-12/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
+- [X] Committed: `docs/week-12/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
 ---
 
@@ -70,7 +70,202 @@ One row for every method the search finds, in a table with exactly these three c
 
 Run `./gradlew test`. Under step 3, paste the last line of its output in a code block. If it fails and you're out of time, paste the first error and one sentence on what it means.
 
+BUILD SUCCESSFUL in 1s
+
 Commit and push the artifact and the code together.
+
+## Checklist
+
+Work down this list in order and check every box before you commit. **6 of tonight's 20 group points.**
+
+**Item 1: What the regroup showed (1 pt)**
+- [ ] Item 1 names each thing the regroup showed that your code did, and what you changed, or says `none`
+
+**Item 2: It compiles and every test passes (2 pts)**
+- [ ] Everyone in the group has pushed, and the driver has pulled
+- [ ] `./gradlew test` ends with `BUILD SUCCESSFUL`, with no test deleted or commented out
+- [ ] Its last line is pasted under item 2
+
+**Item 3: One home for every class (1 pt)**
+- [ ] Every class under `src/main` is in `model`, `view`, or the package that holds `Launcher`
+- [ ] Item 3 lists every class you moved or deleted, or says `none`
+- [ ] `./gradlew test` still ends with `BUILD SUCCESSFUL`
+
+**Item 4: The window (2 pts)**
+- [ ] (a) `mainClass` names `Launcher`, and `./gradlew run` opens the **Brew!** window
+- [ ] (b) `ShopSetup` has a method that builds the menu, and `ShopSetup.main` uses it
+- [ ] (c) `brew-and-byte.fxml` holds the menu list
+- [ ] (d) `BrewAndByteController` fills the list from the menu
+- [ ] (e) `BrewAndByteApplication` builds the menu and hands it to the controller
+- [ ] `./gradlew run` opens a window listing every item on your menu with its price
+- [ ] The screenshot is committed at `docs/week-12/first-screen.png` and shows in the artifact
+- [ ] Item 4 names everyone in the group who has opened the window on their own computer
+
+**Committed (required: nothing is graded without it)**
+- [ ] Everything new is under `### After the regroup`, committed and pushed with your code and the screenshot
+
+---
+
+## How to Run Things
+
+**One person drives.** The driver shares their screen and types; everyone else reads along, catches mistakes and looks things up. Switch drivers between items if you like. At the end, everyone pulls and runs the window on their own computer (the last box of item 4).
+
+**Where commands go.** Open the terminal inside IntelliJ: **View > Tool Windows > Terminal**. It starts in your project folder, the one with `gradlew` in it. Every command in this handout runs from there.
+
+**How to type a command.** This handout writes commands the Mac way. Use the line for your computer:
+
+| Your computer | Run the tests | Run the application |
+|---|---|---|
+| Mac or Linux | `./gradlew test` | `./gradlew run` |
+| Windows, PowerShell (IntelliJ's default) | `.\gradlew test` | `.\gradlew run` |
+| Windows, Command Prompt | `gradlew test` | `gradlew run` |
+
+**No terminal, or no `gradlew.bat` in your repo?** Use IntelliJ's Gradle window instead: **View > Tool Windows > Gradle**, then open **Tasks**. Double-click **verification > test** to run the tests, or **application > run** to run the application.
+
+**The first run is slow.** Gradle downloads itself, Java 25 and JavaFX the first time, which can take several minutes. Let it finish. The runs after that take seconds.
+
+**Three ways to start the application.** Any one is fine.
+
+1. In the terminal: `./gradlew run`
+2. In the Gradle window: **Tasks > application > run**
+3. In IntelliJ: open `Launcher.java` and click the green arrow beside `main`. **Run `Launcher`, never `BrewAndByteApplication`.**
+
+On a Mac, the window can open behind IntelliJ. If nothing seems to happen, look for a Java icon in the Dock.
+
+---
+
+Don't start a new file or delete your first version's work. Put everything new under this heading at the very end of section 1:
+
+### After the regroup
+
+**Item 1: What the regroup showed.** One bullet for each thing the regroup showed that your code did, and what you changed. If nothing applied, write `none`. Keep this short.
+
+none
+
+**Item 2: It compiles and every test passes.** Everyone pushes what they have, then the driver runs `git pull`. Then:
+
+```
+./gradlew test
+```
+
+It compiles everything under `src/main` and `src/test` and runs every test. Fix every error until it ends with `BUILD SUCCESSFUL`. Under item 2, paste the last line of its output in a code block.
+
+- Read the **first** error, not the last. Later errors are usually caused by the first one.
+- A test that fails because the test is out of date gets fixed. A test that fails because the code is wrong means the code gets fixed.
+- Don't delete a test or comment one out to make the build pass.
+- If `module-info.java` has a `requires` line for JUnit or any other testing library, a test class is probably sitting under `src/main`. Move every test class to the same package under `src/test/java`, then delete that `requires` line. Only the tests use those libraries, and the line stops the application from running.
+
+BUILD SUCCESSFUL in 623ms
+
+**Item 3: One home for every class.** From next week the application is built in three places: `model`, `view`, and the package that holds `Launcher` and the JavaFX files. Look at every class under `src/main`:
+
+- A class in any other package moves into one of those three. In IntelliJ, drag the file onto the package in the Project window and let it fix the `package` line and the imports.
+- A class nothing uses, and that isn't in `docs/design/class-model.md`, gets deleted.
+- Under item 3, one bullet for each class you moved or deleted, saying which and where to, or write `none`. Run `./gradlew test` again when you're done.
+
+none
+
+**Item 4: The window.** Your repo has had a JavaFX application in it since Week 1: `Launcher` starts it, `BrewAndByteApplication` opens the window, `brew-and-byte.fxml` says what's in the window, and `BrewAndByteController` fills it in. Tonight it shows your menu. Do these in order, and run the application after each one that says to.
+
+**(a) Make it run.** In `build.gradle.kts`, find the line that sets `mainClass` and change it to exactly this:
+
+```kotlin
+    mainClass.set("edu.metrostate.oodi.brewandbyte.Launcher")
+```
+
+If IntelliJ shows a small elephant icon offering to reload Gradle, click it. Run the application. A small window with a **Brew!** button should open. Close it. **Don't go on until this works;** the table at the end of this handout covers the usual problems.
+
+**(b) A method that builds the menu.** In `ShopSetup`, add a `public static` method that builds your menu, every item and its price, the way `ShopSetup` builds it now, and returns it. Change `ShopSetup.main` to get its menu from that method, so the menu is built in one place. Use your own class's name if your menu isn't called `Menu`.
+
+**(c) The FXML file.** Replace everything in `src/main/resources/edu/metrostate/oodi/brewandbyte/brew-and-byte.fxml` with this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.metrostate.oodi.brewandbyte.BrewAndByteController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+  </padding>
+
+  <Label text="Menu"/>
+  <ListView fx:id="menuList" prefHeight="500.0"/>
+</VBox>
+```
+
+**(d) The controller.** In `BrewAndByteController`, delete the `welcomeText` field and the `onBrewButtonClick` method. Add a field for the list, and one method that fills it from your menu, one line per item: its name, then its price. Here is the shape, from the library, not from your code:
+
+```java
+public class CatalogController {
+    @FXML
+    private ListView<String> bookList;
+
+    public void showBooks(Catalog catalog) {
+        for (Book book : catalog) {
+            bookList.getItems().add(book.getTitle() + "    " + book.getCallNumber());
+        }
+    }
+}
+```
+
+Your field is named `menuList`, matching `fx:id` in the FXML. Get the items from your menu however your menu hands them out (Week 10 decided that). Format a `double` price with `String.format("$%.2f", price)`; a `BigDecimal` price can go straight in with `"$" + price`. Your IDE will offer the imports, including `javafx.scene.control.ListView`.
+
+**(e) The application.** Replace the `start` method in `BrewAndByteApplication` with this, changing `Menu` and `buildMenu` to your names, and import both `ShopSetup` and your menu class from `model`:
+
+```java
+    @Override
+    public void start(Stage stage) throws IOException {
+        Menu menu = ShopSetup.buildMenu();
+        FXMLLoader fxmlLoader = new FXMLLoader(BrewAndByteApplication.class.getResource("brew-and-byte.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 480, 640);
+        BrewAndByteController controller = fxmlLoader.getController();
+        controller.showMenu(menu);
+        stage.setTitle("Brew & Byte");
+        stage.setScene(scene);
+        stage.show();
+    }
+```
+
+Run `./gradlew run`. The window lists your menu.
+
+- Leave the console screens in `view` alone. They become windows next week.
+- Don't move the JavaFX files into another package tonight.
+
+**The screenshot.** Save a screenshot of the running window as `docs/week-12/first-screen.png` and put this line under item 4: `![First screen](first-screen.png)`
+
+**Last: everyone runs it.** Commit and push the artifact, the screenshot and the code together. Then everyone in the group runs `git pull` and starts the application on their own computer. The driver lists the names of everyone whose window opened under item 4, then commits and pushes once more. Anyone whose window didn't open puts the first line of their error in section 4 of the template.
+
+![First screen](first-screen.png)
+
+---
+
+## If It Doesn't Run
+
+Find the first error in the output, then find it here.
+
+| What you see | What it means | What to do |
+|---|---|---|
+| `Could not find or load main class` or `Main class ... not found`, naming `CoffeeShopApplication` | `build.gradle.kts` names a class that doesn't exist | Step (a) |
+| `JavaFX runtime components are missing` | You started `BrewAndByteApplication` directly | Start `Launcher`, or use `./gradlew run` |
+| `module not found: org.junit.jupiter.api`, or any other testing library | `module-info.java` requires a library only the tests have, usually because a test class is under `src/main` | Move every test class to `src/test/java`, then delete that `requires` line |
+| `zsh: permission denied: ./gradlew` (Mac) | The script isn't marked runnable | Run `chmod +x gradlew` once, then try again |
+| `'gradlew' is not recognized` or `.\gradlew : The term ... is not recognized` (Windows) | You're not in the project folder, or the repo has no `gradlew.bat` | Open IntelliJ's terminal, which starts in the right folder. If there's still no `gradlew.bat`, use the Gradle window. |
+| `invalid source release: 25` or `Unsupported class file major version` in IntelliJ | IntelliJ is running Gradle with an older Java | **Settings > Build, Execution, Deployment > Build Tools > Gradle**, set **Gradle JVM** to a Java 25, then reload Gradle. If there's none, use `./gradlew` in the terminal, which downloads its own. |
+| `Location is not set` | The FXML file wasn't found | The file must be exactly `src/main/resources/edu/metrostate/oodi/brewandbyte/brew-and-byte.fxml` |
+| `Error resolving onAction='#onBrewButtonClick'` | The FXML still points at the method you deleted | Replace the whole FXML file with the one in step (c) |
+| `ClassNotFoundException` naming the controller | `fx:controller` in the FXML doesn't match the controller's full name | It must be exactly `edu.metrostate.oodi.brewandbyte.BrewAndByteController` |
+| `NullPointerException` in `showMenu` on `menuList` | The field isn't connected to the FXML | The field's name must match `fx:id="menuList"` exactly, with `@FXML` on the line above it |
+| `cannot find symbol` naming `ShopSetup`, `Menu` or `ListView` | A missing import | Click the red name and let IntelliJ add the import |
+| The window opens and the list is empty | Nothing reached the list | Check that `buildMenu` returns a menu with items in it, and that `start` calls `showMenu` |
+| Nothing happens, no error (Mac) | The window opened behind IntelliJ | Look for a Java icon in the Dock |
+
+**Stuck for ten minutes on the same error?** Paste its first line in the main room's chat with your group number.
+
 
 ---
 

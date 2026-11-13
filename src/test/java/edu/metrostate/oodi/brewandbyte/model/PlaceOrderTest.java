@@ -10,105 +10,121 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlaceOrderTest {
-	
-	@Test
-	void refusesAnItemThatCannotBeSold() {
-		MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
-		
-		List<MenuItem> menuItems = Arrays.asList(latte);
-		Menu menu = new Menu(menuItems);
-		
-		Ingredient oatMilk = new Ingredient("Oat Milk", 0, 10, menu);
-		
-		latte.addIngredient(oatMilk, 2);
 
-		OrderItem latteItem = new OrderItem(latte, 1, oatMilk, "large", null, new BigDecimal("4.00"));
-		
-		Customer customer = new Customer("Member", "Test Customer", "555-0100");
-		
-		List<OrderItem> orderItems = Arrays.asList(latteItem);
-		
-		Order order = new Order(customer, orderItems, "TEST-001", "pending", LocalDateTime.now(), new BigDecimal("4.00"), "");
-	}
-	
-	@Test
-	void completesOrderAndUsesIngredients() {
-	    MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
+    @Test
+    void refusesAnItemThatCannotBeSold() {
+        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 
-	    List<MenuItem> menuItems = Arrays.asList(latte);
-	    Menu menu = new Menu(menuItems);
+        List<MenuItem> menuItems = Arrays.asList(latte);
+        Menu menu = new Menu(menuItems);
 
-	    Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
-	    latte.addIngredient(oatMilk, 2);
+        Ingredient oatMilk = new Ingredient("Oat Milk", 0, 10, menu);
 
-	    OrderItem latteItem = new OrderItem(
-	            latte, 1, oatMilk, "large", null, new BigDecimal("4.00"));
+        latte.addIngredient(oatMilk, 2);
 
-	    Customer customer = new Customer("Member", "Test Customer", "555-0100");
-	    List<OrderItem> orderItems = Arrays.asList(latteItem);
+        OrderItem latteItem = new OrderItem(
+                latte, 1, oatMilk, "large", null, new BigDecimal("4.00")
+        );
 
-	    Order order = new Order(customer, orderItems, "TEST-002",
-	            "pending", LocalDateTime.now(), new BigDecimal("4.00"), "");
+        Customer customer = new Customer("Member", "Test Customer", "555-0100");
 
-	    Queue queue = new Queue();
-	    queue.addOrder(order);
+        List<OrderItem> orderItems = Arrays.asList(latteItem);
 
-	    Sales sales = new Sales();
-	    queue.completeOrder(sales);
+        Order order = new Order(
+                customer, orderItems, "TEST-001", "pending",
+                LocalDateTime.now(), new BigDecimal("4.00"), "",
+                new LoyaltyDiscount()
+        );
+    }
 
-	    assertEquals(96, oatMilk.getQuantity());
-	    assertEquals("Completed", order.getStatus());
-	}
-	
-	@Test
-	void warnsManagerWhenIngredientIsLow() {
-	    MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
+    @Test
+    void completesOrderAndUsesIngredients() {
+        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 
-	    Menu menu = new Menu(Arrays.asList(latte));
+        List<MenuItem> menuItems = Arrays.asList(latte);
+        Menu menu = new Menu(menuItems);
 
-	    Ingredient oatMilk = new Ingredient("Oat Milk", 12, 10, menu);
-	    latte.addIngredient(oatMilk, 2);
+        Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
+        latte.addIngredient(oatMilk, 2);
 
-	    OrderItem latteItem = new OrderItem(
-	            latte, 2, null, "Large", null, new BigDecimal("4.00"));
+        OrderItem latteItem = new OrderItem(
+                latte, 1, oatMilk, "large", null, new BigDecimal("4.00")
+        );
 
-	    Order order = new Order(
-	            new Customer("Member", "Test Customer", "555-0100"),
-	            Arrays.asList(latteItem),
-	            "TEST-003",
-	            "pending",
-	            LocalDateTime.now(),
-	            new BigDecimal("8.00"),
-	            "");
+        Customer customer = new Customer("Member", "Test Customer", "555-0100");
+        List<OrderItem> orderItems = Arrays.asList(latteItem);
 
-	    assertTrue(order.consumeIngredients());
-	    assertEquals(8, oatMilk.getQuantity());
-	}
-	
-	@Test
-	void displaysNextOrder() {
-	    MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
-	    Menu menu = new Menu(Arrays.asList(latte));
+        Order order = new Order(
+                customer, orderItems, "TEST-002",
+                "pending", LocalDateTime.now(), new BigDecimal("4.00"), "",
+                new LoyaltyDiscount()
+        );
 
-	    Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
-	    Ingredient vanillaSyrup = new Ingredient("Vanilla Syrup", 100, 10, menu);
+        Queue queue = new Queue();
+        queue.addOrder(order);
 
-	    OrderItem latteItem = new OrderItem(
-	            latte, 1, oatMilk, "Large", vanillaSyrup, new BigDecimal("4.00"));
+        Sales sales = new Sales();
+        queue.completeOrder(sales);
 
-	    Order order = new Order(
-	            new Customer("Member", "Test Customer", "555-0100"),
-	            Arrays.asList(latteItem),
-	            "TEST-004",
-	            "pending",
-	            LocalDateTime.now(),
-	            new BigDecimal("4.00"),
-	            "Extra hot");
+        assertEquals(96, oatMilk.getQuantity());
+        assertEquals("Completed", order.getStatus());
+    }
 
-	    Queue queue = new Queue();
-	    queue.addOrder(order);
+    @Test
+    void warnsManagerWhenIngredientIsLow() {
+        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
 
-	    queue.displayNextOrder();
-	}
+        Menu menu = new Menu(Arrays.asList(latte));
+
+        Ingredient oatMilk = new Ingredient("Oat Milk", 12, 10, menu);
+        latte.addIngredient(oatMilk, 2);
+
+        OrderItem latteItem = new OrderItem(
+                latte, 2, null, "Large", null, new BigDecimal("4.00")
+        );
+
+        Order order = new Order(
+                new Customer("Member", "Test Customer", "555-0100"),
+                Arrays.asList(latteItem),
+                "TEST-003",
+                "pending",
+                LocalDateTime.now(),
+                new BigDecimal("8.00"),
+                "",
+                new LoyaltyDiscount()
+        );
+
+        assertTrue(order.consumeIngredients());
+        assertEquals(8, oatMilk.getQuantity());
+    }
+
+    @Test
+    void displaysNextOrder() {
+        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
+        Menu menu = new Menu(Arrays.asList(latte));
+
+        Ingredient oatMilk = new Ingredient("Oat Milk", 100, 10, menu);
+        Ingredient vanillaSyrup = new Ingredient("Vanilla Syrup", 100, 10, menu);
+
+        OrderItem latteItem = new OrderItem(
+                latte, 1, oatMilk, "Large", vanillaSyrup, new BigDecimal("4.00")
+        );
+
+        Order order = new Order(
+                new Customer("Member", "Test Customer", "555-0100"),
+                Arrays.asList(latteItem),
+                "TEST-004",
+                "pending",
+                LocalDateTime.now(),
+                new BigDecimal("4.00"),
+                "Extra hot",
+                new LoyaltyDiscount()
+        );
+
+        Queue queue = new Queue();
+        queue.addOrder(order);
+
+        queue.displayNextOrder();
+    }
 }
 

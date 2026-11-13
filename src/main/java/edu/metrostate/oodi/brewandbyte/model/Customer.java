@@ -12,6 +12,6 @@ public class Customer {
 	}
 	
 	public boolean checkLoyalty() {
-		throw new UnsupportedOperationException("not implemented");
+		return "Member".equals(loyaltyStatus);
 	}
 }

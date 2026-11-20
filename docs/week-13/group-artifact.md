@@ -102,6 +102,224 @@ Commit and push the artifact and the code together.
 
 ---
 
+## Checklist
+
+Work down this list in order and check every box before you commit. **6 of tonight's 20 group points.**
+
+**Item 1: What the regroup showed (1 pt)**
+- [ ] Item 1 names each of rules 3, 5, 6 and 7 that your code broke, where, and what you changed, or says `none`
+
+**Item 2: The manager's window (4 pts)**
+- [ ] (a) `BrewAndByteController` is in the `controller` package, `module-info.java` has the second `opens` line, and the menu window opens as before
+- [ ] (b) `ShopSetup` has a method that builds your facade
+- [ ] (c) `manager.fxml` is next to `brew-and-byte.fxml`
+- [ ] (d) `ManagerController` is in `controller`, and from `model` it imports only your facade and the class it reads
+- [ ] (e) `BrewAndByteController` gets the menu from your facade
+- [ ] (f) `start` builds one facade and hands it to both controllers
+- [ ] `./gradlew run` opens both windows. In the manager's window, adding an item puts it in the list, adding it again shows a message, and a price of zero shows a message
+- [ ] `./gradlew test` ends with `BUILD SUCCESSFUL`, and its last line is pasted under item 2
+- [ ] The screenshot is committed at `docs/week-13/manager-window.png` and shows in the artifact
+- [ ] Item 2 names everyone in the group who has opened both windows on their own computer
+
+**Item 3: What the controllers know (1 pt)**
+- [ ] Item 3 has a line for each class in `controller` with every model class it imports, and your step 1 answer from the sketch under them
+
+**Committed (required: nothing is graded without it)**
+- [ ] Everything new is under `### After the regroup`, committed and pushed with your code and the screenshot
+
+---
+
+**One person drives.** The driver shares their screen and types; everyone else reads along, catches mistakes and looks things up. Switch drivers between items if you like. Commands are written the Mac way; Week 12's Ready to Build On handout has the Windows forms and IntelliJ's Gradle window.
+
+Don't start a new file or delete your first version's work. Put everything new under this heading at the very end of section 1:
+
+### After the regroup
+
+**The rules from tonight:**
+
+1. **The model holds the shop's data and every rule about it,** and knows no screen.
+2. **A controller turns what someone did into a call on the model,** then tells the view what to show. It holds no rule about the business.
+3. **A rule lives in the class that holds the data it's about,** and refuses by throwing with a reason the controller can show.
+4. **The screens talk to one class in the model, the facade:** one method for each job a person does, each passing the job on.
+5. **A facade holds no rules of its own.**
+6. **Reading what the facade hands back is fine. Changing goes through the facade.**
+7. **There is one facade,** built once and handed to every controller.
+
+**Item 1: What the regroup showed.** For each of rules 3, 5, 6 and 7 that your code broke, one bullet: where, and what you changed. If none, write `none`. Keep this short.
+
+**Item 2: The manager's window.** Do these in order. Use your own names wherever this says `Shop` (your facade) or `MenuItem`.
+
+**(a) A `controller` package.** In IntelliJ's Project window, right-click the package that holds `Launcher` and choose **New > Package**. Name it `controller`. Drag `BrewAndByteController` onto it and let IntelliJ fix the `package` line and the imports. Then:
+
+- Open `src/main/resources/edu/metrostate/oodi/brewandbyte/brew-and-byte.fxml` and check that `fx:controller` is exactly `edu.metrostate.oodi.brewandbyte.controller.BrewAndByteController`. Fix it if IntelliJ didn't.
+- In `src/main/java/module-info.java`, add this line under the `opens` line that's already there:
+
+```java
+    opens edu.metrostate.oodi.brewandbyte.controller to javafx.fxml;
+```
+
+Run `./gradlew run`. The menu window opens as it did last week. **Don't go on until it does;** the table at the end of this handout covers the usual problems. The FXML files stay where they are. Only the controller classes move.
+
+**(b) A method that builds the facade.** In `ShopSetup`, add a `public static` method that builds the menu with your `buildMenu` method from last week, builds anything else your facade takes the way `ShopSetup` builds it now, and returns a new facade holding them.
+
+**(c) The manager's FXML.** Create `src/main/resources/edu/metrostate/oodi/brewandbyte/manager.fxml`, next to `brew-and-byte.fxml`, with exactly this in it:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.metrostate.oodi.brewandbyte.controller.ManagerController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+  </padding>
+
+  <Label text="Menu"/>
+  <ListView fx:id="menuList" prefHeight="300.0"/>
+
+  <Label text="Item name"/>
+  <TextField fx:id="nameField"/>
+  <Label text="Price, like 4.50"/>
+  <TextField fx:id="priceField"/>
+
+  <HBox spacing="10.0">
+    <Button text="Add item" onAction="#onAddItem"/>
+    <Button text="Change price" onAction="#onChangePrice"/>
+  </HBox>
+
+  <Label fx:id="messageLabel"/>
+</VBox>
+```
+
+If your add method needs more than a name and a price, add a `Label` and a `TextField` for each extra value after the price field, in the same shape, with an `fx:id` of your choosing.
+
+**(d) The manager's controller.** Create `ManagerController` in the `controller` package. Here is the shape, from the library, not from your code:
+
+```java
+public class CirculationController {
+    @FXML
+    private ListView<String> bookList;
+    @FXML
+    private TextField memberField;
+    @FXML
+    private TextField bookField;
+    @FXML
+    private Label messageLabel;
+
+    private Library library;
+
+    public void connect(Library library) {
+        this.library = library;
+        showBooks();
+    }
+
+    @FXML
+    protected void onCheckOut() {
+        try {
+            library.checkOut(memberField.getText(), bookField.getText());
+            messageLabel.setText("Checked out.");
+            showBooks();
+        } catch (IllegalArgumentException e) {
+            messageLabel.setText(e.getMessage());
+        }
+    }
+
+    private void showBooks() {
+        bookList.getItems().clear();
+        for (Book book : library.books()) {
+            bookList.getItems().add(book.getTitle() + "    " + book.getCallNumber());
+        }
+    }
+}
+```
+
+Yours has:
+
+- Four fields with `@FXML` on the line above each, named exactly as the FXML's `fx:id`s: `menuList` (a `ListView<String>`), `nameField` and `priceField` (each a `TextField`), and `messageLabel` (a `Label`). Plus a field for each extra text field you added in (c).
+- A field for your facade, and a `public void connect(...)` that takes your facade, keeps it, and shows the menu.
+- Two methods with `@FXML` on them, named exactly `onAddItem` and `onChangePrice`. Each calls one method on your facade, puts a message in `messageLabel`, and shows the menu again. Each catches `IllegalArgumentException` and puts its message in `messageLabel`.
+- One private method that shows the menu: clear `menuList`, then one line per item from your facade, its name and then its price, the way `BrewAndByteController` does it.
+- Turn the price field's text into your price type in the controller: `Double.parseDouble(priceField.getText())` for a `double`, `new BigDecimal(priceField.getText())` for a `BigDecimal`, or `(int) Math.round(Double.parseDouble(priceField.getText()) * 100)` for whole cents. Text that isn't a number throws `NumberFormatException`, which is an `IllegalArgumentException`, so the same `catch` shows it.
+- From `model`, it imports your facade and the class whose items it reads (like `MenuItem`), and nothing else. Your IDE will offer the JavaFX imports: `javafx.fxml.FXML`, `javafx.scene.control.Label`, `ListView` and `TextField`.
+
+**(e) The counter's controller.** Change `BrewAndByteController.showMenu` to take your facade instead of the menu, and get the items from your facade. From `model`, it now imports your facade and the class it reads, and nothing else.
+
+The application won't compile again until (f) is done. That's expected; finish (f) before you run it.
+
+**(f) Both windows.** Replace the `start` method in `BrewAndByteApplication` with this, changing `Shop` and `buildShop` to your names. Import your facade and `ShopSetup` from `model`, both controllers from `controller`, and `javafx.stage.Stage`.
+
+```java
+    @Override
+    public void start(Stage stage) throws IOException {
+        Shop shop = ShopSetup.buildShop();
+
+        FXMLLoader counterLoader = new FXMLLoader(BrewAndByteApplication.class.getResource("brew-and-byte.fxml"));
+        Scene counterScene = new Scene(counterLoader.load(), 480, 640);
+        BrewAndByteController counter = counterLoader.getController();
+        counter.showMenu(shop);
+        stage.setTitle("Brew & Byte");
+        stage.setScene(counterScene);
+        stage.show();
+
+        FXMLLoader managerLoader = new FXMLLoader(BrewAndByteApplication.class.getResource("manager.fxml"));
+        Scene managerScene = new Scene(managerLoader.load(), 480, 640);
+        ManagerController manager = managerLoader.getController();
+        manager.connect(shop);
+        Stage managerStage = new Stage();
+        managerStage.setTitle("Brew & Byte: Manager");
+        managerStage.setScene(managerScene);
+        managerStage.show();
+    }
+```
+
+Run `./gradlew run`. Two windows open, one on top of the other: drag the manager's aside. In the manager's window, try all four of these:
+
+1. Add an item with a new name and a price. It appears in the manager's list.
+2. Add it again. The message says it's already on the menu.
+3. Type an item's name and a price of `0`, and press **Change price**. The message says the price must be more than zero.
+4. Change an item's price to a new one. The manager's list shows the new price.
+
+The counter's window doesn't change when the manager adds an item. That isn't tonight's job; put it in section 4 if you like.
+
+Run `./gradlew test`. Under item 2, paste its last line in a code block.
+
+**The screenshot.** After step 4 above, save a screenshot of the manager's window as `docs/week-13/manager-window.png`, and put this line under item 2: `![Manager window](manager-window.png)`
+
+**Last: everyone runs it.** Commit and push the artifact, the screenshot and the code together. Then everyone in the group runs `git pull` and starts the application on their own computer. The driver lists the names of everyone whose two windows opened under item 2, then commits and pushes once more. Anyone whose windows didn't open puts the first `Caused by` line of their error in section 4 of the template.
+
+**Item 3: What the controllers know.** One line for each class in `controller`: its name, then every model class it imports, in this shape (from the library): `CirculationController: Library, Book`. Under them, copy your step 1 answer from your own sketch, in this shape: `The case: N new field(s), N copied`.
+
+---
+
+## If It Doesn't Run
+
+Find the first line that starts with `Caused by`, then find it here.
+
+| What you see | What it means | What to do |
+|---|---|---|
+| `does not export edu.metrostate.oodi.brewandbyte.controller to module javafx.fxml` | JavaFX can't build a controller in the new package | Step (a): add the second `opens` line to `module-info.java` |
+| `ClassNotFoundException: edu.metrostate.oodi.brewandbyte.BrewAndByteController` | The FXML still names the controller's old package | Step (a): fix `fx:controller` in `brew-and-byte.fxml` |
+| `ClassNotFoundException` naming `controller.ManagerController` | The class isn't in `controller`, or its name is spelled differently | It must be exactly `ManagerController`, in the `controller` package |
+| `Location is not set` | `manager.fxml` wasn't found | The file must be exactly `src/main/resources/edu/metrostate/oodi/brewandbyte/manager.fxml` |
+| `Error resolving onAction='#onAddItem'` or `'#onChangePrice'` | The FXML's button names a method the controller doesn't have | The method names must match exactly, with `@FXML` on the line above each |
+| `NullPointerException` naming `menuList`, `nameField`, `priceField` or `messageLabel` | That field isn't connected to the FXML | The field's name must match its `fx:id` exactly, with `@FXML` on the line above it |
+| `NullPointerException` naming your facade's field, when you press a button | `connect` was never called | Step (f): `start` calls `manager.connect(shop)` |
+| `JavaFX runtime components are missing` | You started `BrewAndByteApplication` directly | Start `Launcher`, or use `./gradlew run` |
+| `cannot find symbol` naming a controller, `ShopSetup`, your facade, `Stage` or `TextField` | A missing import | Click the red name and let IntelliJ add the import |
+| Only one window opens | The manager's window opened exactly on top of the counter's | Drag the top window aside |
+| The message says `For input string` | The price field isn't a number | Type a price like `4.50`. Your controller can catch `NumberFormatException` first and say something friendlier. |
+| Nothing happens, no error (Mac) | The windows opened behind IntelliJ | Look for a Java icon in the Dock |
+
+**Stuck for ten minutes on the same error?** Paste its first `Caused by` line in the main room's chat with your group number.
+
+
 ## 2. How We Got Here
 
 *What did the problem require? What did you look at first? Walk through the reasoning that led to what you produced, not just what you decided but why. This section carries more weight than any other, because the deciding is the part being graded.*

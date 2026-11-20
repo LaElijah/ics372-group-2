@@ -70,9 +70,11 @@ Don't fix anything in step 1. Step 2, the second handout and the reconciliation 
 
 ---
 
-- add a menu item (4.2): Kept by Menu
-- change an item's price (4.2): Kept by Menu
-- hand out the menu's items, so a screen can show them (2.1) : Kept in Menu (to get MenuItems)
+- add a menu item (4.2): Kept by Menu due to it holding all menu items
+
+- change an item's price (4.2): Kept by Menu due to it holding all menu items
+
+- hand out the menu's items, so a screen can show them (2.1) : Kept by Menu due to it holding all menu items
 
 ---
 

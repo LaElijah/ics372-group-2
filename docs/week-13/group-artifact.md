@@ -295,11 +295,26 @@ The counter's window doesn't change when the manager adds an item. That isn't to
 
 Run `./gradlew test`. Under item 2, paste its last line in a code block.
 
+```
+BUILD SUCCESSFUL in 42s
+```
+
 **The screenshot.** After step 4 above, save a screenshot of the manager's window as `docs/week-13/manager-window.png`, and put this line under item 2: `![Manager window](manager-window.png)`
 
 **Last: everyone runs it.** Commit and push the artifact, the screenshot and the code together. Then everyone in the group runs `git pull` and starts the application on their own computer. The driver lists the names of everyone whose two windows opened under item 2, then commits and pushes once more. Anyone whose windows didn't open puts the first `Caused by` line of their error in section 4 of the template.
 
 **Item 3: What the controllers know.** One line for each class in `controller`: its name, then every model class it imports, in this shape (from the library): `CirculationController: Library, Book`. Under them, copy your step 1 answer from your own sketch, in this shape: `The case: N new field(s), N copied`.
+
+`ManagerController: ShopHandler , MenuItem`
+`BrewAndByteController: ShopHandler , MenuItem` 
+
+ Class | Model classes it uses | Rules about the business in it |
+|---|---|---|
+| ManagerWarnings | Ingredient, LowStockListener | onLowStock: warn manager when a stock has reported low |
+| BaristaScreen | Order, Queue, 'QueueListener' | onOrderPlaced & onOrderCompleted: refresh queue display on order updates, displayQueue: relist the queue on the screen |
+| PickupBoard | Order, 'OrderCompletedListener' | onOrderCompleted: print the order completed and its confirmation number |
+
+`The case: 0 new field(s), 0 copied`
 
 ---
 

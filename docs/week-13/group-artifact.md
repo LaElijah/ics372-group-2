@@ -1,15 +1,15 @@
 # Group Artifact - Week 13
 **Group:** 2
-**Members present:** [Full names, as they appear on the roster]
-**Date:** [Date]
+**Members present:** Elijah Allotey, Thomas Yang, Abenezer Aregay, Houreratou Bande
+**Date:** 11/20/2026
 
 ## Checklist
 
 Read this aloud in your room and check every box before you commit. **14 of tonight's 20 group points.** The other 6 are in the second handout, after the break.
 
 - [x ] Step 1 has a row for every class outside `model` that uses a model class **(3 pts)**
-- [ ] Step 2: one class in `model` that the screens talk to, with a method for each of the three jobs; each method passes the job on; a price of zero or less and a name already on the menu are both refused with an `IllegalArgumentException` and a message; section 2 says which class keeps each rule and why **(5 pts)**
-- [ ] Step 3: `ManagerJobsTest` has both test methods, and step 3 has the last line of `./gradlew test` **(2 pts)**
+- [ x] Step 2: one class in `model` that the screens talk to, with a method for each of the three jobs; each method passes the job on; a price of zero or less and a name already on the menu are both refused with an `IllegalArgumentException` and a message; section 2 says which class keeps each rule and why **(5 pts)**
+- [x ] Step 3: `ManagerJobsTest` has both test methods, and step 3 has the last line of `./gradlew test` **(2 pts)**
 - [ ] Sections 2 to 4 of the template say how you got here, where you disagreed, and what you're not sure about **(4 pts)**
 - [ ] Committed: `docs/week-13/group-artifact.md` and everything in `src/` **(required: nothing is graded without it)**
 
@@ -113,12 +113,12 @@ Work down this list in order and check every box before you commit. **6 of tonig
 - [ ] Item 1 names each of rules 3, 5, 6 and 7 that your code broke, where, and what you changed, or says `none`
 
 **Item 2: The manager's window (4 pts)**
-- [ ] (a) `BrewAndByteController` is in the `controller` package, `module-info.java` has the second `opens` line, and the menu window opens as before
-- [ ] (b) `ShopSetup` has a method that builds your facade
-- [ ] (c) `manager.fxml` is next to `brew-and-byte.fxml`
-- [ ] (d) `ManagerController` is in `controller`, and from `model` it imports only your facade and the class it reads
-- [ ] (e) `BrewAndByteController` gets the menu from your facade
-- [ ] (f) `start` builds one facade and hands it to both controllers
+- [x ] (a) `BrewAndByteController` is in the `controller` package, `module-info.java` has the second `opens` line, and the menu window opens as before
+- [ x] (b) `ShopSetup` has a method that builds your facade
+- [x ] (c) `manager.fxml` is next to `brew-and-byte.fxml`
+- [x ] (d) `ManagerController` is in `controller`, and from `model` it imports only your facade and the class it reads
+- [ x] (e) `BrewAndByteController` gets the menu from your facade
+- [ x] (f) `start` builds one facade and hands it to both controllers
 - [ ] `./gradlew run` opens both windows. In the manager's window, adding an item puts it in the list, adding it again shows a message, and a price of zero shows a message
 - [ ] `./gradlew test` ends with `BUILD SUCCESSFUL`, and its last line is pasted under item 2
 - [ ] The screenshot is committed at `docs/week-13/manager-window.png` and shows in the artifact
@@ -149,6 +149,8 @@ Don't start a new file or delete your first version's work. Put everything new u
 7. **There is one facade,** built once and handed to every controller.
 
 **Item 1: What the regroup showed.** For each of rules 3, 5, 6 and 7 that your code broke, one bullet: where, and what you changed. If none, write `none`. Keep this short.
+
+`none`
 
 **Item 2: The manager's window.** Do these in order. Use your own names wherever this says `Shop` (your facade) or `MenuItem`.
 

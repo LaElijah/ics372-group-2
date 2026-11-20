@@ -1,4 +1,4 @@
-package edu.metrostate.oodi.brewandbyte.Controller;
+package edu.metrostate.oodi.brewandbyte.Model;
 
 import edu.metrostate.oodi.brewandbyte.model.Menu;
 import edu.metrostate.oodi.brewandbyte.model.MenuItem;

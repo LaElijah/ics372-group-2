@@ -21,7 +21,7 @@ public class Menu {
     
     public void addItem(String name, BigDecimal price, String status)
     {
-        if (!menuItems.contains(name))
+        if (!menuItems.contains(name) && (price.compareTo(new BigDecimal(0)) > 0))
         {
             menuItems.add(new MenuItem(name, price, status));
         }

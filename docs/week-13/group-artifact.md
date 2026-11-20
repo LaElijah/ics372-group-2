@@ -67,6 +67,15 @@ Don't fix anything in step 1. Step 2, the second handout and the reconciliation 
 - If a change stops a test compiling, fix the test.
 - Leave the JavaFX files alone until after the break.
 
+
+---
+
+- add a menu item (4.2): Kept by Menu
+- change an item's price (4.2): Kept by Menu
+- hand out the menu's items, so a screen can show them (2.1) : Kept in Menu (to get MenuItems)
+
+---
+
 **Step 3: The test.** In `src/test/java/edu/metrostate/oodi/brewandbyte/model/ManagerJobsTest.java`, two test methods. Each one's setup builds its own menu, anything else your facade takes, and the facade. Here's the shape of a test that checks a refusal, from the library:
 
 ```java

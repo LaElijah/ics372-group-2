@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import edu.metrostate.oodi.brewandbyte.controller.BrewAndByteController;
 import edu.metrostate.oodi.brewandbyte.model.Menu;
 import edu.metrostate.oodi.brewandbyte.model.ShopSetup;
 

@@ -14,13 +14,8 @@ public class ShopSetup {
     public static void main(String[] args) {
 
         Inventory inventory = new Inventory();
-
-        MenuItem coffee = new MenuItem("Coffee", new BigDecimal("3.00"), "Available");
-        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
-
-        List<MenuItem> menuItems = Arrays.asList(coffee, latte);
-        Menu menu = new Menu(menuItems);
-
+        Menu menu = buildMenu();
+    
         inventory.addIngredient(new Ingredient("Coffee Beans", 100, 10, menu));
         inventory.addIngredient(new Ingredient("Espresso", 100, 10, menu));
         inventory.addIngredient(new Ingredient("Regular Milk", 100, 10, menu));
@@ -35,18 +30,19 @@ public class ShopSetup {
         inventory.getIngredient("Oat Milk").addLowStockListener(managerWarnings);
         inventory.getIngredient("Vanilla Syrup").addLowStockListener(managerWarnings);
 
-        coffee.addIngredient(inventory.getIngredient("Coffee Beans"), 1);
-        latte.addIngredient(inventory.getIngredient("Espresso"), 1);
 
-        coffee.checkAvailability();
-        latte.checkAvailability();
+        menu.getMenuItem("coffee").addIngredient(inventory.getIngredient("Coffee Beans"), 1);
+        menu.getMenuItem("latte").addIngredient(inventory.getIngredient("Espresso"), 1);
+
+        menu.getMenuItem("coffee").checkAvailability();
+        menu.getMenuItem("latte").checkAvailability();
 
         OrderItem coffeeItem = new OrderItem(
-                coffee, 1, null, "Medium", null, new BigDecimal("3.00")
+            menu.getMenuItem("coffee"), 1, null, "Medium", null, new BigDecimal("3.00")
         );
 
         OrderItem latteItem = new OrderItem(
-                latte, 1, inventory.getIngredient("Oat Milk"), "large",
+            menu.getMenuItem("latte"), 1, inventory.getIngredient("Oat Milk"), "large",
                 inventory.getIngredient("Vanilla Syrup"), new BigDecimal("4.00")
         );
 
@@ -87,5 +83,13 @@ public class ShopSetup {
 
         System.out.println("Brew & Byte is set up");
     }
+    public static Menu buildMenu(){
+        MenuItem coffee = new MenuItem("Coffee", new BigDecimal("3.00"), "Available");
+        MenuItem latte = new MenuItem("Latte", new BigDecimal("4.00"), "Available");
+
+        List<MenuItem> menuItems = Arrays.asList(coffee, latte);
+        Menu menu = new Menu(menuItems);
+        return menu;
+    } 
 }
 

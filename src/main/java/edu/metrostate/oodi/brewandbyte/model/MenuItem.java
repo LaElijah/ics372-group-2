@@ -20,8 +20,10 @@ public class MenuItem {
 	
 	public String getName() {
 		return name;
-	}
-	
+}	
+	public BigDecimal getPrice() {
+    return price;
+}
 	void checkAvailability()
 	{
 	    for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) 

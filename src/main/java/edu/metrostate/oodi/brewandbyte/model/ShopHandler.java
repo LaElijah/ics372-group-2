@@ -1,4 +1,4 @@
-package edu.metrostate.oodi.brewandbyte.Model;
+package edu.metrostate.oodi.brewandbyte.model;
 
 import edu.metrostate.oodi.brewandbyte.model.Menu;
 import edu.metrostate.oodi.brewandbyte.model.MenuItem;
@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 import java.util.List;
 
-class ShopHandler
+public class ShopHandler
 {
     private final Menu menu; 
     

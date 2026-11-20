@@ -96,6 +96,9 @@ void refusesAHoldOnABookTheLibraryDoesNotHave() {
 
 Run `./gradlew test`. Under step 3, paste the last line of its output in a code block. If it fails and you're out of time, paste the first error and one sentence on what it means.
 
+```
+ BUILD SUCCESSFUL in 6s
+```
 Commit and push the artifact and the code together.
 
     

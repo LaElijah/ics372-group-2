@@ -38,7 +38,7 @@ public class MenuItem {
 	}
 	
 	public void updatePrice(BigDecimal price) {
-		throw new UnsupportedOperationException("not implemented");
+		this.price = price;
 	}
 	
 	public void updateName(String name) {

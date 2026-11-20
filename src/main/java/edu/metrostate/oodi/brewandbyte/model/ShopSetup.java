@@ -91,5 +91,10 @@ public class ShopSetup {
         Menu menu = new Menu(menuItems);
         return menu;
     } 
+    public static ShopHandler buildShop(){
+        ShopHandler shop = new ShopHandler(buildMenu());
+        return shop;
+    }
+    
 }
 
